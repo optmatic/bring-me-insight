@@ -2,12 +2,12 @@
 export const colors = {
   // Primary colors
   leafy: {
-    DEFAULT: "#84cc16", // Lime, leafy green
+    DEFAULT: "#B8D576", // Lime, leafy green
     light: "#a3e635",
     dark: "#65a30d",
   },
   forest: {
-    DEFAULT: "#166534", // Forest, gumtree green
+    DEFAULT: "#3A7D44", // Forest, gumtree green
     light: "#22c55e",
     dark: "#14532d",
   },
@@ -22,7 +22,7 @@ export const colors = {
   warning: "#f59e0b", // Amber
   error: "#ef4444", // Red
   info: "#3b82f6", // Blue
-}
+};
 
 // Typography
 export const typography = {
@@ -48,15 +48,18 @@ export const typography = {
     medium: "500",
     bold: "700",
   },
-}
+};
 
 // Gradients
 export const gradients = {
-  primary: "bg-gradient-to-r from-forest to-leafy/60",
-  primaryHover: "hover:from-forest hover:to-leafy/80",
-  tag: "bg-gradient-to-r from-forest to-leafy/40",
-  tagHover: "hover:bg-gradient-to-r hover:from-forest hover:to-leafy/60",
-}
+  primary:
+    "bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC] text-black",
+  primaryHover:
+    "hover:from-[#328E6E] hover:via-[#67AE6E] hover:via-[#90C67C] hover:to-[#E1EEBC] hover:text-black",
+  tag: "bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC]/40 text-black",
+  tagHover:
+    "hover:bg-gradient-to-r hover:from-[#328E6E] hover:via-[#67AE6E] hover:via-[#90C67C] hover:to-[#E1EEBC]/60 hover:text-black",
+};
 
 // Spacing
 export const spacing = {
@@ -70,7 +73,7 @@ export const spacing = {
     },
     maxWidth: "1200px",
   },
-}
+};
 
 // Borders
 export const borders = {
@@ -85,7 +88,7 @@ export const borders = {
     medium: "2px",
     thick: "4px",
   },
-}
+};
 
 // Shadows
 export const shadows = {
@@ -94,15 +97,17 @@ export const shadows = {
   md: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
   lg: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
   logo: "4px 4px 0px 0px rgba(22,101,52,0.8)",
-}
+};
 
 // Common component styles
 export const componentStyles = {
   // Button styles
   button: {
-    primary: `${gradients.primary} ${gradients.primaryHover} text-white font-mono text-xs`,
-    outline: "border border-charcoal/20 text-forest hover:text-leafy hover:border-leafy font-mono text-xs",
-    ghost: "font-mono text-xs text-leafy p-0 hover:bg-transparent hover:text-leafy",
+    primary: `${gradients.primary} ${gradients.primaryHover} text-black font-mono text-xs`,
+    outline:
+      "border border-charcoal/20 text-forest hover:text-leafy hover:border-leafy font-mono text-xs",
+    ghost:
+      "font-mono text-xs text-leafy p-0 hover:bg-transparent hover:text-leafy",
   },
 
   // Card styles
@@ -113,7 +118,7 @@ export const componentStyles = {
 
   // Tag styles
   tag: {
-    DEFAULT: `${gradients.tag} ${gradients.tagHover} px-3 py-1 font-mono text-xs text-white shadow-sm`,
+    DEFAULT: `${gradients.tag} ${gradients.tagHover} px-3 py-1 font-mono text-xs text-black shadow-sm`,
   },
 
   // Logo styles
@@ -125,7 +130,8 @@ export const componentStyles = {
   // Navigation styles
   nav: {
     link: {
-      DEFAULT: "font-mono text-xs tracking-wider text-charcoal hover:text-leafy transition-colors",
+      DEFAULT:
+        "font-mono text-xs tracking-wider text-charcoal hover:text-leafy transition-colors",
       active: "font-mono text-xs tracking-wider text-leafy font-medium",
     },
   },
@@ -142,4 +148,4 @@ export const componentStyles = {
     body: "font-mono text-sm text-charcoal/80",
     small: "font-mono text-xs text-charcoal/60",
   },
-}
+};

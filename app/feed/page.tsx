@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { ChevronRight, Twitter, Instagram, Facebook } from "lucide-react"
-import Image from "next/image"
-import { useEffect } from "react"
+import { Button } from "@/components/ui/button";
+import { ChevronRight, Twitter, Instagram, Facebook } from "lucide-react";
+import Image from "next/image";
+import { useEffect } from "react";
 
 export default function FeedPage() {
   // Scroll to top on page load
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="min-h-screen bg-offwhite flex flex-col">
@@ -19,10 +19,13 @@ export default function FeedPage() {
           <div className="container mx-auto py-12 px-4 md:px-6 lg:px-8">
             <div className="max-w-[1200px] mx-auto">
               <div className="max-w-2xl">
-                <h1 className="font-sans text-4xl md:text-5xl font-light text-black mb-4">Social Feed</h1>
+                <h1 className="font-sans text-4xl md:text-5xl font-light text-black mb-4">
+                  Social Feed
+                </h1>
                 <p className="font-mono text-sm text-charcoal/80">
-                  The most insightful commentary from across social media, curated by our editors to bring you diverse
-                  perspectives on current events.
+                  The most insightful commentary from across social media,
+                  curated by our editors to bring you diverse perspectives on
+                  current events.
                 </p>
               </div>
             </div>
@@ -35,7 +38,9 @@ export default function FeedPage() {
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
               {/* Main Feed */}
               <div className="md:col-span-8 space-y-8">
-                <h2 className="font-sans text-2xl font-light text-black">Trending Conversations</h2>
+                <h2 className="font-sans text-2xl font-light text-black">
+                  Trending Conversations
+                </h2>
 
                 {/* Twitter Posts */}
                 {[
@@ -96,7 +101,10 @@ export default function FeedPage() {
                     topic: "International",
                   },
                 ].map((post, index) => (
-                  <div key={index} className="border border-charcoal/20 rounded-md p-4 shadow-sm">
+                  <div
+                    key={index}
+                    className="border border-charcoal/20 rounded-md p-4 shadow-sm"
+                  >
                     <div className="flex items-start">
                       <div className="relative h-12 w-12 rounded-full overflow-hidden mr-3 flex-shrink-0">
                         <Image
@@ -108,17 +116,27 @@ export default function FeedPage() {
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center">
-                          <p className="font-sans text-sm font-medium">{post.author}</p>
+                          <p className="font-sans text-sm font-medium">
+                            {post.author}
+                          </p>
                           {post.verified && (
                             <span className="ml-1 bg-leafy text-white rounded-full p-0.5 flex items-center justify-center">
-                              <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                              <svg
+                                className="h-3 w-3"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                              >
                                 <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
                               </svg>
                             </span>
                           )}
                         </div>
-                        <p className="font-mono text-xs text-charcoal/60 mb-2">{post.handle}</p>
-                        <p className="font-mono text-sm text-charcoal/90 mb-3">{post.content}</p>
+                        <p className="font-mono text-xs text-charcoal/60 mb-2">
+                          {post.handle}
+                        </p>
+                        <p className="font-mono text-sm text-charcoal/90 mb-3">
+                          {post.content}
+                        </p>
 
                         {post.image && (
                           <div className="relative h-48 w-full mb-3 rounded overflow-hidden">
@@ -132,26 +150,44 @@ export default function FeedPage() {
                         )}
 
                         <div className="flex items-center justify-between">
-                          <span className="font-mono text-xs text-charcoal/60">{post.date}</span>
+                          <span className="font-mono text-xs text-charcoal/60">
+                            {post.date}
+                          </span>
                           <div className="flex items-center space-x-4">
                             {post.platform === "Twitter" && (
                               <>
-                                <span className="font-mono text-xs text-charcoal/60">{post.comments} replies</span>
-                                <span className="font-mono text-xs text-charcoal/60">{post.retweets} retweets</span>
-                                <span className="font-mono text-xs text-charcoal/60">{post.likes} likes</span>
+                                <span className="font-mono text-xs text-charcoal/60">
+                                  {post.comments} replies
+                                </span>
+                                <span className="font-mono text-xs text-charcoal/60">
+                                  {post.retweets} retweets
+                                </span>
+                                <span className="font-mono text-xs text-charcoal/60">
+                                  {post.likes} likes
+                                </span>
                               </>
                             )}
                             {post.platform === "Instagram" && (
                               <>
-                                <span className="font-mono text-xs text-charcoal/60">{post.likes} likes</span>
-                                <span className="font-mono text-xs text-charcoal/60">{post.comments} comments</span>
+                                <span className="font-mono text-xs text-charcoal/60">
+                                  {post.likes} likes
+                                </span>
+                                <span className="font-mono text-xs text-charcoal/60">
+                                  {post.comments} comments
+                                </span>
                               </>
                             )}
                             {post.platform === "Facebook" && (
                               <>
-                                <span className="font-mono text-xs text-charcoal/60">{post.likes} likes</span>
-                                <span className="font-mono text-xs text-charcoal/60">{post.shares} shares</span>
-                                <span className="font-mono text-xs text-charcoal/60">{post.comments} comments</span>
+                                <span className="font-mono text-xs text-charcoal/60">
+                                  {post.likes} likes
+                                </span>
+                                <span className="font-mono text-xs text-charcoal/60">
+                                  {post.shares} shares
+                                </span>
+                                <span className="font-mono text-xs text-charcoal/60">
+                                  {post.comments} comments
+                                </span>
                               </>
                             )}
                           </div>
@@ -160,14 +196,22 @@ export default function FeedPage() {
                     </div>
                     <div className="mt-3 pt-3 border-t border-charcoal/10">
                       <div className="flex items-center justify-between">
-                        <span className="inline-block px-2 py-1 bg-gradient-to-r from-forest to-leafy/40 text-white font-mono text-xs rounded-sm">
+                        <span className="inline-block px-2 py-1 bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC]/40 text-black font-mono text-xs rounded-sm">
                           {post.topic}
                         </span>
                         <div className="flex items-center">
-                          {post.platform === "Twitter" && <Twitter className="h-4 w-4 text-[#1DA1F2] mr-1" />}
-                          {post.platform === "Instagram" && <Instagram className="h-4 w-4 text-[#E1306C] mr-1" />}
-                          {post.platform === "Facebook" && <Facebook className="h-4 w-4 text-[#4267B2] mr-1" />}
-                          <span className="font-mono text-xs text-charcoal/60">{post.platform}</span>
+                          {post.platform === "Twitter" && (
+                            <Twitter className="h-4 w-4 text-[#1DA1F2] mr-1" />
+                          )}
+                          {post.platform === "Instagram" && (
+                            <Instagram className="h-4 w-4 text-[#E1306C] mr-1" />
+                          )}
+                          {post.platform === "Facebook" && (
+                            <Facebook className="h-4 w-4 text-[#4267B2] mr-1" />
+                          )}
+                          <span className="font-mono text-xs text-charcoal/60">
+                            {post.platform}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -175,7 +219,7 @@ export default function FeedPage() {
                 ))}
 
                 <div className="flex justify-center mt-8">
-                  <Button className="bg-gradient-to-r from-forest to-leafy/60 hover:from-forest hover:to-leafy/80 text-white font-mono text-xs">
+                  <Button className="bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC] hover:from-[#328E6E] hover:via-[#67AE6E] hover:via-[#90C67C] hover:to-[#E1EEBC] text-black font-mono text-xs">
                     LOAD MORE <ChevronRight className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
@@ -186,7 +230,9 @@ export default function FeedPage() {
                 <div className="sticky top-24">
                   {/* Trending Topics */}
                   <div className="border border-charcoal/20 p-4 shadow-sm mb-6">
-                    <h3 className="font-sans text-xl font-light text-black mb-4">Trending Topics</h3>
+                    <h3 className="font-sans text-xl font-light text-black mb-4">
+                      Trending Topics
+                    </h3>
                     <ul className="space-y-3">
                       {[
                         { name: "Climate Policy", count: 1243 },
@@ -195,9 +241,16 @@ export default function FeedPage() {
                         { name: "International Relations", count: 634 },
                         { name: "Healthcare", count: 521 },
                       ].map((topic, index) => (
-                        <li key={index} className="flex items-center justify-between">
-                          <span className="font-mono text-sm text-charcoal/80">#{topic.name.replace(/\s+/g, "")}</span>
-                          <span className="font-mono text-xs text-charcoal/60">{topic.count} posts</span>
+                        <li
+                          key={index}
+                          className="flex items-center justify-between"
+                        >
+                          <span className="font-mono text-sm text-charcoal/80">
+                            #{topic.name.replace(/\s+/g, "")}
+                          </span>
+                          <span className="font-mono text-xs text-charcoal/60">
+                            {topic.count} posts
+                          </span>
                         </li>
                       ))}
                     </ul>
@@ -205,7 +258,9 @@ export default function FeedPage() {
 
                   {/* Featured Accounts */}
                   <div className="border border-charcoal/20 p-4 shadow-sm">
-                    <h3 className="font-sans text-xl font-light text-black mb-4">Featured Accounts</h3>
+                    <h3 className="font-sans text-xl font-light text-black mb-4">
+                      Featured Accounts
+                    </h3>
                     <ul className="space-y-4">
                       {[
                         {
@@ -243,18 +298,32 @@ export default function FeedPage() {
                             />
                           </div>
                           <div>
-                            <p className="font-sans text-sm font-medium">{account.name}</p>
+                            <p className="font-sans text-sm font-medium">
+                              {account.name}
+                            </p>
                             <div className="flex items-center">
-                              <p className="font-mono text-xs text-charcoal/60 mr-2">{account.handle}</p>
-                              {account.platform === "Twitter" && <Twitter className="h-3 w-3 text-[#1DA1F2]" />}
-                              {account.platform === "Instagram" && <Instagram className="h-3 w-3 text-[#E1306C]" />}
-                              {account.platform === "Facebook" && <Facebook className="h-3 w-3 text-[#4267B2]" />}
+                              <p className="font-mono text-xs text-charcoal/60 mr-2">
+                                {account.handle}
+                              </p>
+                              {account.platform === "Twitter" && (
+                                <Twitter className="h-3 w-3 text-[#1DA1F2]" />
+                              )}
+                              {account.platform === "Instagram" && (
+                                <Instagram className="h-3 w-3 text-[#E1306C]" />
+                              )}
+                              {account.platform === "Facebook" && (
+                                <Facebook className="h-3 w-3 text-[#4267B2]" />
+                              )}
                             </div>
                           </div>
                         </li>
                       ))}
                     </ul>
-                    <Button variant="outline" size="sm" className="w-full mt-4 font-mono text-xs border-charcoal/20">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full mt-4 font-mono text-xs border-charcoal/20"
+                    >
                       View All Featured Accounts
                     </Button>
                   </div>
@@ -265,5 +334,5 @@ export default function FeedPage() {
         </section>
       </main>
     </div>
-  )
+  );
 }

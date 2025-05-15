@@ -1,46 +1,49 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Search, Share2 } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Search, Share2 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface ArticleInfo {
-  title: string
-  category: string
-  image: string
+  title: string;
+  category: string;
+  image: string;
 }
 
 export function SiteHeader() {
-  const pathname = usePathname()
-  const [scrolled, setScrolled] = useState(false)
-  const isArticlePage = pathname.startsWith("/article/")
-  const [articleInfo, setArticleInfo] = useState<ArticleInfo | null>(null)
+  const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const isArticlePage = pathname.startsWith("/article/");
+  const [articleInfo, setArticleInfo] = useState<ArticleInfo | null>(null);
 
   // Listen for article info updates
   useEffect(() => {
     const handleArticleInfoUpdate = (event: any) => {
-      setArticleInfo(event.detail)
-    }
+      setArticleInfo(event.detail);
+    };
 
-    document.addEventListener("articleInfoUpdate", handleArticleInfoUpdate)
+    document.addEventListener("articleInfoUpdate", handleArticleInfoUpdate);
 
     return () => {
-      document.removeEventListener("articleInfoUpdate", handleArticleInfoUpdate)
-    }
-  }, [])
+      document.removeEventListener(
+        "articleInfoUpdate",
+        handleArticleInfoUpdate
+      );
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 300)
-    }
+      setScrolled(window.scrollY > 300);
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navItems = [
     { name: "AUSTRALIA", path: "/category/australia" },
@@ -49,12 +52,12 @@ export function SiteHeader() {
     { name: "FEED", path: "/feed" },
     { name: "MEDIA", path: "/media" },
     { name: "DISCOVER", path: "/discover" },
-  ]
+  ];
 
   return (
     <header className="sticky top-0 z-50 bg-offwhite">
       {/* Main header with logo, tagline, and search */}
-      <div className="container mx-auto py-4 px-4 md:px-6 lg:px-8 border-b border-charcoal/20">
+      <div className="mx-auto max-w-[1200px] py-4 border-b border-charcoal/20">
         <div className="max-w-[1200px] mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             {/* Logo and tagline */}
@@ -120,7 +123,9 @@ export function SiteHeader() {
                 </div>
                 <div className="flex items-center gap-4">
                   <button
-                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                    onClick={() =>
+                      window.scrollTo({ top: 0, behavior: "smooth" })
+                    }
                     className="text-sm font-mono text-leafy hover:text-forest transition-colors"
                   >
                     Back to top
@@ -149,7 +154,8 @@ export function SiteHeader() {
                     <Link
                       href={item.path}
                       className={`font-mono text-xs tracking-wider ${
-                        pathname === item.path || pathname.startsWith(`${item.path}/`)
+                        pathname === item.path ||
+                        pathname.startsWith(`${item.path}/`)
                           ? "text-leafy font-medium"
                           : "text-charcoal hover:text-leafy"
                       } transition-colors`}
@@ -164,5 +170,5 @@ export function SiteHeader() {
         </nav>
       )}
     </header>
-  )
+  );
 }

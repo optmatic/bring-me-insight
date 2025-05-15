@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ChevronRight, Play, Clock, Calendar } from "lucide-react"
-import Image from "next/image"
-import { useEffect, useState } from "react"
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ChevronRight, Play, Clock, Calendar } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function MediaPage() {
   // State for active media type
-  const [activeTab, setActiveTab] = useState<string>("all")
+  const [activeTab, setActiveTab] = useState<string>("all");
 
   // Scroll to top on page load
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="min-h-screen bg-offwhite flex flex-col">
@@ -23,10 +23,13 @@ export default function MediaPage() {
           <div className="container mx-auto py-12 px-4 md:px-6 lg:px-8">
             <div className="max-w-[1200px] mx-auto">
               <div className="max-w-2xl">
-                <h1 className="font-sans text-4xl md:text-5xl font-light text-black mb-4">Media Center</h1>
+                <h1 className="font-sans text-4xl md:text-5xl font-light text-black mb-4">
+                  Media Center
+                </h1>
                 <p className="font-mono text-sm text-charcoal/80">
-                  Explore our curated collection of videos, podcasts, and visual stories that provide deeper context and
-                  analysis on current events.
+                  Explore our curated collection of videos, podcasts, and visual
+                  stories that provide deeper context and analysis on current
+                  events.
                 </p>
               </div>
             </div>
@@ -37,7 +40,11 @@ export default function MediaPage() {
         <section className="container mx-auto mt-8 px-4 md:px-6 lg:px-8">
           <div className="max-w-[1200px] mx-auto">
             {/* Media Type Tabs */}
-            <Tabs defaultValue="all" className="w-full mb-8" onValueChange={setActiveTab}>
+            <Tabs
+              defaultValue="all"
+              className="w-full mb-8"
+              onValueChange={setActiveTab}
+            >
               <TabsList className="bg-offwhite border border-charcoal/20 p-1 h-auto flex flex-nowrap overflow-x-auto scrollbar-hide">
                 <TabsTrigger
                   value="all"
@@ -75,7 +82,9 @@ export default function MediaPage() {
             {/* Featured Media */}
             {(activeTab === "all" || activeTab === "videos") && (
               <div className="mb-12">
-                <h2 className="font-sans text-2xl font-light text-black mb-6">Featured Video</h2>
+                <h2 className="font-sans text-2xl font-light text-black mb-6">
+                  Featured Video
+                </h2>
                 <div className="border border-charcoal/20 shadow-sm overflow-hidden">
                   <div className="relative aspect-video w-full">
                     <Image
@@ -92,25 +101,39 @@ export default function MediaPage() {
                   </div>
                   <div className="p-6">
                     <div className="flex items-center mb-2">
-                      <span className="font-mono text-xs text-leafy uppercase tracking-wider">ANALYSIS</span>
+                      <span className="font-mono text-xs text-leafy uppercase tracking-wider">
+                        ANALYSIS
+                      </span>
                       <span className="mx-2 text-charcoal/30">•</span>
-                      <span className="font-mono text-xs text-charcoal/60">15:42</span>
+                      <span className="font-mono text-xs text-charcoal/60">
+                        15:42
+                      </span>
                     </div>
                     <h3 className="font-sans text-2xl font-light text-black mb-2">
-                      The Changing Landscape of Australian Politics: What's Next?
+                      The Changing Landscape of Australian Politics: What's
+                      Next?
                     </h3>
                     <p className="font-mono text-sm text-charcoal/80 mb-4">
-                      Our political editor breaks down the current political climate, recent policy shifts, and what
-                      they mean for Australia's future both domestically and on the global stage.
+                      Our political editor breaks down the current political
+                      climate, recent policy shifts, and what they mean for
+                      Australia's future both domestically and on the global
+                      stage.
                     </p>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
                         <div className="relative h-8 w-8 rounded-full overflow-hidden mr-2">
-                          <Image src="/placeholder.svg?key=avatar-editor" alt="Editor" fill className="object-cover" />
+                          <Image
+                            src="/placeholder.svg?key=avatar-editor"
+                            alt="Editor"
+                            fill
+                            className="object-cover"
+                          />
                         </div>
-                        <span className="font-mono text-xs text-charcoal/70">By Michael Chen</span>
+                        <span className="font-mono text-xs text-charcoal/70">
+                          By Michael Chen
+                        </span>
                       </div>
-                      <Button className="bg-gradient-to-r from-forest to-leafy/60 hover:from-forest hover:to-leafy/80 text-white font-mono text-xs">
+                      <Button className="bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC] hover:from-[#328E6E] hover:via-[#67AE6E] hover:via-[#90C67C] hover:to-[#E1EEBC] text-black font-mono text-xs">
                         WATCH NOW <ChevronRight className="ml-2 h-4 w-4" />
                       </Button>
                     </div>
@@ -127,7 +150,8 @@ export default function MediaPage() {
                   {[
                     {
                       type: "video",
-                      title: "Economic Outlook: Post-Pandemic Recovery Strategies",
+                      title:
+                        "Economic Outlook: Post-Pandemic Recovery Strategies",
                       thumbnail: "/placeholder.svg?key=video1",
                       duration: "12:34",
                       date: "May 12, 2025",
@@ -143,7 +167,8 @@ export default function MediaPage() {
                     },
                     {
                       type: "video",
-                      title: "International Relations: Pacific Alliances Explained",
+                      title:
+                        "International Relations: Pacific Alliances Explained",
                       thumbnail: "/placeholder.svg?key=video3",
                       duration: "18:45",
                       date: "May 8, 2025",
@@ -166,11 +191,15 @@ export default function MediaPage() {
                             <Play className="h-6 w-6 text-white" fill="white" />
                           </div>
                         </div>
-                        <div className="absolute top-0 left-0 bg-gradient-to-r from-forest to-leafy/40 px-3 py-1">
-                          <span className="font-mono text-xs text-white">{item.category}</span>
+                        <div className="absolute top-0 left-0 bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC]/40 px-3 py-1 text-black">
+                          <span className="font-mono text-xs text-white">
+                            {item.category}
+                          </span>
                         </div>
                         <div className="absolute bottom-2 right-2 bg-black/70 px-2 py-1 rounded">
-                          <span className="font-mono text-xs text-white">{item.duration}</span>
+                          <span className="font-mono text-xs text-white">
+                            {item.duration}
+                          </span>
                         </div>
                       </div>
                       <div className="p-4">
@@ -219,11 +248,15 @@ export default function MediaPage() {
                           fill
                           className="object-cover"
                         />
-                        <div className="absolute top-0 left-0 bg-gradient-to-r from-forest to-leafy/40 px-3 py-1">
-                          <span className="font-mono text-xs text-white">{item.category}</span>
+                        <div className="absolute top-0 left-0 bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC]/40 px-3 py-1 text-black">
+                          <span className="font-mono text-xs text-white">
+                            {item.category}
+                          </span>
                         </div>
                         <div className="absolute top-0 right-0 bg-black/70 px-2 py-1">
-                          <span className="font-mono text-xs text-white">PODCAST</span>
+                          <span className="font-mono text-xs text-white">
+                            PODCAST
+                          </span>
                         </div>
                       </div>
                       <div className="p-4">
@@ -233,11 +266,15 @@ export default function MediaPage() {
                         <div className="mt-4 flex justify-between items-center">
                           <div className="flex items-center text-charcoal/60">
                             <Calendar className="h-3 w-3 mr-1" />
-                            <span className="font-mono text-xs">{item.date}</span>
+                            <span className="font-mono text-xs">
+                              {item.date}
+                            </span>
                           </div>
                           <div className="flex items-center text-charcoal/60">
                             <Clock className="h-3 w-3 mr-1" />
-                            <span className="font-mono text-xs">{item.duration}</span>
+                            <span className="font-mono text-xs">
+                              {item.duration}
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -283,14 +320,20 @@ export default function MediaPage() {
                             <Play className="h-6 w-6 text-white" fill="white" />
                           </div>
                         </div>
-                        <div className="absolute top-0 left-0 bg-gradient-to-r from-forest to-leafy/40 px-3 py-1">
-                          <span className="font-mono text-xs text-white">{item.category}</span>
+                        <div className="absolute top-0 left-0 bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC]/40 px-3 py-1 text-black">
+                          <span className="font-mono text-xs text-white">
+                            {item.category}
+                          </span>
                         </div>
                         <div className="absolute top-0 right-0 bg-black/70 px-2 py-1">
-                          <span className="font-mono text-xs text-white">SHORT</span>
+                          <span className="font-mono text-xs text-white">
+                            SHORT
+                          </span>
                         </div>
                         <div className="absolute bottom-2 right-2 bg-black/70 px-2 py-1 rounded">
-                          <span className="font-mono text-xs text-white">{item.duration}</span>
+                          <span className="font-mono text-xs text-white">
+                            {item.duration}
+                          </span>
                         </div>
                       </div>
                       <div className="p-4">
@@ -337,11 +380,15 @@ export default function MediaPage() {
                           fill
                           className="object-cover"
                         />
-                        <div className="absolute top-0 left-0 bg-gradient-to-r from-forest to-leafy/40 px-3 py-1">
-                          <span className="font-mono text-xs text-white">{item.category}</span>
+                        <div className="absolute top-0 left-0 bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC]/40 px-3 py-1 text-black">
+                          <span className="font-mono text-xs text-white">
+                            {item.category}
+                          </span>
                         </div>
                         <div className="absolute top-0 right-0 bg-black/70 px-2 py-1">
-                          <span className="font-mono text-xs text-white">INFOGRAPHIC</span>
+                          <span className="font-mono text-xs text-white">
+                            INFOGRAPHIC
+                          </span>
                         </div>
                       </div>
                       <div className="p-4">
@@ -360,7 +407,7 @@ export default function MediaPage() {
             </div>
 
             <div className="flex justify-center mt-12">
-              <Button className="bg-gradient-to-r from-forest to-leafy/60 hover:from-forest hover:to-leafy/80 text-white font-mono text-xs">
+              <Button className="bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC] hover:from-[#328E6E] hover:via-[#67AE6E] hover:via-[#90C67C] hover:to-[#E1EEBC] text-black font-mono text-xs">
                 LOAD MORE <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
@@ -368,5 +415,5 @@ export default function MediaPage() {
         </section>
       </main>
     </div>
-  )
+  );
 }

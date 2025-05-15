@@ -1,15 +1,21 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { ChevronRight, ExternalLink, Globe, Calendar, BookOpen } from "lucide-react"
-import Image from "next/image"
-import { useEffect } from "react"
+import { Button } from "@/components/ui/button";
+import {
+  ChevronRight,
+  ExternalLink,
+  Globe,
+  Calendar,
+  BookOpen,
+} from "lucide-react";
+import Image from "next/image";
+import { useEffect } from "react";
 
 export default function DiscoverPage() {
   // Scroll to top on page load
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="min-h-screen bg-offwhite flex flex-col">
@@ -19,10 +25,14 @@ export default function DiscoverPage() {
           <div className="container mx-auto py-12 px-4 md:px-6 lg:px-8">
             <div className="max-w-[1200px] mx-auto">
               <div className="max-w-2xl">
-                <h1 className="font-sans text-4xl md:text-5xl font-light text-black mb-4">Discover</h1>
+                <h1 className="font-sans text-4xl md:text-5xl font-light text-black mb-4">
+                  Discover
+                </h1>
                 <p className="font-mono text-sm text-charcoal/80">
-                  Explore our curated selection of essential reading from around the web. We highlight the most
-                  insightful analysis, thought-provoking commentary, and in-depth reporting on current events.
+                  Explore our curated selection of essential reading from around
+                  the web. We highlight the most insightful analysis,
+                  thought-provoking commentary, and in-depth reporting on
+                  current events.
                 </p>
               </div>
             </div>
@@ -32,38 +42,55 @@ export default function DiscoverPage() {
         {/* Featured External Content */}
         <section className="container mx-auto mt-8 px-4 md:px-6 lg:px-8">
           <div className="max-w-[1200px] mx-auto">
-            <h2 className="font-sans text-2xl font-light text-black mb-6">Editor's Picks</h2>
+            <h2 className="font-sans text-2xl font-light text-black mb-6">
+              Editor's Picks
+            </h2>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 border border-charcoal/20 p-4 md:p-8 shadow-sm mb-12">
               <div className="lg:col-span-7 flex flex-col justify-center">
                 <div className="flex items-center mb-2">
-                  <span className="font-mono text-xs text-leafy uppercase tracking-wider">FEATURED</span>
+                  <span className="font-mono text-xs text-leafy uppercase tracking-wider">
+                    FEATURED
+                  </span>
                   <span className="mx-2 text-charcoal/30">•</span>
-                  <span className="font-mono text-xs text-charcoal/60">THE ECONOMIST</span>
+                  <span className="font-mono text-xs text-charcoal/60">
+                    THE ECONOMIST
+                  </span>
                 </div>
-                <a href="#" target="_blank" rel="noopener noreferrer" className="group">
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group"
+                >
                   <h3 className="font-sans text-3xl md:text-4xl font-light text-black mb-4 leading-tight group-hover:text-leafy transition-colors">
-                    The Geopolitical Implications of Australia's New Defense Strategy
+                    The Geopolitical Implications of Australia's New Defense
+                    Strategy
                   </h3>
                 </a>
                 <p className="font-mono text-sm text-charcoal/80 mb-6">
-                  A comprehensive analysis of Australia's shifting defense priorities and what they mean for regional
-                  stability in the Indo-Pacific. The article examines historical context, current challenges, and future
-                  projections.
+                  A comprehensive analysis of Australia's shifting defense
+                  priorities and what they mean for regional stability in the
+                  Indo-Pacific. The article examines historical context, current
+                  challenges, and future projections.
                 </p>
                 <div className="flex items-center">
                   <a href="#" target="_blank" rel="noopener noreferrer">
-                    <Button className="bg-gradient-to-r from-forest to-leafy/60 hover:from-forest hover:to-leafy/80 text-white font-mono text-xs">
+                    <Button className="bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC] hover:from-[#328E6E] hover:via-[#67AE6E] hover:via-[#90C67C] hover:to-[#E1EEBC] text-black font-mono text-xs">
                       READ ARTICLE <ExternalLink className="ml-2 h-4 w-4" />
                     </Button>
                   </a>
                   <div className="flex items-center ml-4">
                     <Calendar className="h-4 w-4 text-charcoal/60 mr-1" />
-                    <span className="font-mono text-xs text-charcoal/60">May 14, 2025</span>
+                    <span className="font-mono text-xs text-charcoal/60">
+                      May 14, 2025
+                    </span>
                   </div>
                   <div className="flex items-center ml-4">
                     <BookOpen className="h-4 w-4 text-charcoal/60 mr-1" />
-                    <span className="font-mono text-xs text-charcoal/60">15 min read</span>
+                    <span className="font-mono text-xs text-charcoal/60">
+                      15 min read
+                    </span>
                   </div>
                 </div>
               </div>
@@ -91,7 +118,8 @@ export default function DiscoverPage() {
                   category: "Society",
                 },
                 {
-                  title: "Climate Policy Success Stories: What Australia Can Learn",
+                  title:
+                    "Climate Policy Success Stories: What Australia Can Learn",
                   excerpt:
                     "Case studies from around the world offer valuable lessons for effective climate action that balances economic and environmental concerns.",
                   source: "Nature Climate Change",
@@ -101,7 +129,8 @@ export default function DiscoverPage() {
                   category: "Environment",
                 },
                 {
-                  title: "Digital Democracy: How Technology is Changing Political Participation",
+                  title:
+                    "Digital Democracy: How Technology is Changing Political Participation",
                   excerpt:
                     "New platforms are transforming how citizens engage with government, with both promising opportunities and concerning challenges.",
                   source: "MIT Technology Review",
@@ -121,7 +150,8 @@ export default function DiscoverPage() {
                   category: "Economy",
                 },
                 {
-                  title: "Pacific Partnerships: A New Era of Regional Cooperation",
+                  title:
+                    "Pacific Partnerships: A New Era of Regional Cooperation",
                   excerpt:
                     "Emerging alliances between Pacific nations are creating new frameworks for addressing shared challenges from climate change to security.",
                   source: "Foreign Affairs",
@@ -152,31 +182,46 @@ export default function DiscoverPage() {
                       fill
                       className="object-cover"
                     />
-                    <div className="absolute top-0 left-0 bg-gradient-to-r from-forest to-leafy/40 px-3 py-1">
-                      <span className="font-mono text-xs text-white">{article.category}</span>
+                    <div className="absolute top-0 left-0 bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC]/40 px-3 py-1 text-black shadow-black/20 shadow-md">
+                      <span className="font-mono text-xs text-black font-bold">
+                        {article.category}
+                      </span>
                     </div>
                     <div className="absolute top-0 right-0 bg-black/70 px-2 py-1">
                       <div className="flex items-center">
                         <Globe className="h-3 w-3 text-white mr-1" />
-                        <span className="font-mono text-xs text-white">{article.source}</span>
+                        <span className="font-mono text-xs text-white">
+                          {article.source}
+                        </span>
                       </div>
                     </div>
                   </div>
                   <div className="p-4">
-                    <a href="#" target="_blank" rel="noopener noreferrer" className="group">
+                    <a
+                      href="#"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group"
+                    >
                       <h4 className="font-sans text-xl font-light text-black group-hover:text-leafy transition-colors">
                         {article.title}
                       </h4>
                     </a>
-                    <p className="font-mono text-xs text-charcoal/80 mt-2 line-clamp-2">{article.excerpt}</p>
+                    <p className="font-mono text-xs text-charcoal/80 mt-2 line-clamp-2">
+                      {article.excerpt}
+                    </p>
                     <div className="mt-4 flex justify-between items-center">
                       <div className="flex items-center text-charcoal/60">
                         <Calendar className="h-3 w-3 mr-1" />
-                        <span className="font-mono text-xs">{article.date}</span>
+                        <span className="font-mono text-xs">
+                          {article.date}
+                        </span>
                       </div>
                       <div className="flex items-center text-charcoal/60">
                         <BookOpen className="h-3 w-3 mr-1" />
-                        <span className="font-mono text-xs">{article.readTime}</span>
+                        <span className="font-mono text-xs">
+                          {article.readTime}
+                        </span>
                       </div>
                     </div>
                     <a
@@ -185,7 +230,8 @@ export default function DiscoverPage() {
                       rel="noopener noreferrer"
                       className="mt-4 inline-flex items-center font-mono text-xs text-leafy hover:text-forest transition-colors"
                     >
-                      READ FULL ARTICLE <ExternalLink className="ml-1 h-3 w-3" />
+                      READ FULL ARTICLE{" "}
+                      <ExternalLink className="ml-1 h-3 w-3" />
                     </a>
                   </div>
                 </div>
@@ -193,7 +239,7 @@ export default function DiscoverPage() {
             </div>
 
             <div className="flex justify-center mt-12">
-              <Button className="bg-gradient-to-r from-forest to-leafy/60 hover:from-forest hover:to-leafy/80 text-white font-mono text-xs">
+              <Button className="bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC] hover:from-[#328E6E] hover:via-[#67AE6E] hover:via-[#90C67C] hover:to-[#E1EEBC] text-black font-mono text-xs">
                 LOAD MORE <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
@@ -203,10 +249,13 @@ export default function DiscoverPage() {
         {/* Sources Section */}
         <section className="container mx-auto mt-16 px-4 md:px-6 lg:px-8">
           <div className="max-w-[1200px] mx-auto mb-16">
-            <h2 className="font-sans text-2xl font-light text-black mb-6">Our Sources</h2>
+            <h2 className="font-sans text-2xl font-light text-black mb-6">
+              Our Sources
+            </h2>
             <p className="font-mono text-sm text-charcoal/80 mb-8 max-w-3xl">
-              We curate content from a diverse range of reputable publications to provide you with balanced perspectives
-              and in-depth analysis. Here are some of the trusted sources we regularly feature:
+              We curate content from a diverse range of reputable publications
+              to provide you with balanced perspectives and in-depth analysis.
+              Here are some of the trusted sources we regularly feature:
             </p>
 
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -228,7 +277,9 @@ export default function DiscoverPage() {
                   key={index}
                   className="border border-charcoal/20 p-4 text-center hover:border-leafy/50 transition-colors shadow-sm"
                 >
-                  <span className="font-mono text-sm text-charcoal/80">{source}</span>
+                  <span className="font-mono text-sm text-charcoal/80">
+                    {source}
+                  </span>
                 </div>
               ))}
             </div>
@@ -236,5 +287,5 @@ export default function DiscoverPage() {
         </section>
       </main>
     </div>
-  )
+  );
 }

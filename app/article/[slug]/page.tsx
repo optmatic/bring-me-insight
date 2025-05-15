@@ -1,25 +1,32 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { ArrowLeft, Calendar, ChevronRight, Clock, Share2, User } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import {
+  ArrowLeft,
+  Calendar,
+  ChevronRight,
+  Clock,
+  Share2,
+  User,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 export default function ArticlePage({ params }: { params: { slug: string } }) {
   // State for tracking scroll position and active section
-  const [scrolled, setScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState("")
-  const [scrollProgress, setScrollProgress] = useState(0)
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   // Refs for section headings
-  const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({})
+  const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({});
 
   // Scroll to top on page load
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [params.slug])
+    window.scrollTo(0, 0);
+  }, [params.slug]);
 
   // This would normally fetch the article data based on the slug
   // For demo purposes, we're using static content
@@ -68,7 +75,8 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       {
         type: "image",
         url: "/placeholder.svg?key=4gvoa",
-        caption: "Solar farm in regional Victoria, part of Australia's growing renewable energy sector",
+        caption:
+          "Solar farm in regional Victoria, part of Australia's growing renewable energy sector",
       },
       {
         type: "heading",
@@ -111,7 +119,12 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
           "The coming months will be critical in determining whether Australia can reconcile its economic interests with environmental commitments and international expectations. The decisions made now will shape not only the nation's contribution to global climate efforts but also its position in a rapidly evolving global economy.",
       },
     ],
-    tags: ["Climate Policy", "International Relations", "Economic Transition", "Renewable Energy"],
+    tags: [
+      "Climate Policy",
+      "International Relations",
+      "Economic Transition",
+      "Renewable Energy",
+    ],
     relatedArticles: [
       {
         title: "Renewable Energy Projects Accelerate in Rural Communities",
@@ -135,7 +148,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
         slug: "reserve-bank-interest-rate-strategy",
       },
     ],
-  }
+  };
 
   // Extract sections for the table of contents
   const sections = article.content
@@ -143,53 +156,54 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
     .map((block) => ({
       id: (block as any).id || block.content.toLowerCase().replace(/\s+/g, "-"),
       title: block.content,
-    }))
+    }));
 
   // Handle scroll events to update UI
   useEffect(() => {
     const handleScroll = () => {
       // Show/hide the persistent header
-      setScrolled(window.scrollY > 300)
+      setScrolled(window.scrollY > 300);
 
       // Calculate scroll progress
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
-      const scrollTop = window.scrollY
-      const progress = (scrollTop / scrollHeight) * 100
-      setScrollProgress(progress)
+      const scrollHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const scrollTop = window.scrollY;
+      const progress = (scrollTop / scrollHeight) * 100;
+      setScrollProgress(progress);
 
       // Update active section based on scroll position
-      const currentPosition = window.scrollY + 100
+      const currentPosition = window.scrollY + 100;
 
       // Find the current section
-      let currentSection = ""
+      let currentSection = "";
       Object.keys(sectionRefs.current).forEach((id) => {
-        const section = sectionRefs.current[id]
+        const section = sectionRefs.current[id];
         if (section && section.offsetTop <= currentPosition) {
-          currentSection = id
+          currentSection = id;
         }
-      })
+      });
 
       if (currentSection !== activeSection) {
-        setActiveSection(currentSection)
+        setActiveSection(currentSection);
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    handleScroll() // Initial call to set initial state
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Initial call to set initial state
 
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [activeSection])
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [activeSection]);
 
   // Scroll to section when clicking on TOC links
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id)
+    const element = document.getElementById(id);
     if (element) {
       window.scrollTo({
         top: element.offsetTop - 80,
         behavior: "smooth",
-      })
+      });
     }
-  }
+  };
 
   // Set article info for the header via context
   useEffect(() => {
@@ -198,14 +212,14 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       title: article.title,
       category: article.category,
       image: article.heroImage,
-    }
+    };
 
     // Dispatch a custom event that the header component can listen for
     const event = new CustomEvent("articleInfoUpdate", {
       detail: articleInfo,
-    })
-    document.dispatchEvent(event)
-  }, [article])
+    });
+    document.dispatchEvent(event);
+  }, [article]);
 
   return (
     <div className="min-h-screen bg-offwhite flex flex-col">
@@ -213,21 +227,29 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
         {/* Article Header */}
         <section className="container mx-auto mt-8 px-4 md:px-6 lg:px-8">
           <div className="max-w-[1200px] mx-auto">
-            <Link href="/" className="inline-flex items-center font-mono text-xs text-leafy hover:text-forest mb-6">
+            <Link
+              href="/"
+              className="inline-flex items-center font-mono text-xs text-leafy hover:text-forest mb-6"
+            >
               <ArrowLeft className="mr-2 h-4 w-4" />
               BACK TO HOME
             </Link>
 
             <div className="mb-6">
               <span className="font-mono text-xs text-leafy uppercase tracking-wider">
-                <Link href={`/category/${article.category.toLowerCase()}`} className="hover:underline">
+                <Link
+                  href={`/category/${article.category.toLowerCase()}`}
+                  className="hover:underline"
+                >
                   {article.category}
                 </Link>
               </span>
               <h1 className="font-sans text-3xl md:text-4xl lg:text-5xl font-light text-black mt-2 leading-tight">
                 {article.title}
               </h1>
-              <p className="font-mono text-sm text-charcoal/80 mt-4 md:text-base">{article.subtitle}</p>
+              <p className="font-mono text-sm text-charcoal/80 mt-4 md:text-base">
+                {article.subtitle}
+              </p>
             </div>
 
             <div className="flex flex-wrap items-center justify-between border-t border-b border-charcoal/20 py-4 mb-8">
@@ -236,20 +258,32 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                   <User className="h-5 w-5" />
                 </div>
                 <div className="ml-3">
-                  <p className="font-sans text-sm font-medium">{article.author}</p>
-                  <p className="font-mono text-xs text-charcoal/60">{article.authorTitle}</p>
+                  <p className="font-sans text-sm font-medium">
+                    {article.author}
+                  </p>
+                  <p className="font-mono text-xs text-charcoal/60">
+                    {article.authorTitle}
+                  </p>
                 </div>
               </div>
               <div className="flex items-center mt-2 sm:mt-0">
                 <div className="flex items-center mr-4">
                   <Calendar className="h-4 w-4 text-charcoal/60 mr-1" />
-                  <span className="font-mono text-xs text-charcoal/60">{article.publishDate}</span>
+                  <span className="font-mono text-xs text-charcoal/60">
+                    {article.publishDate}
+                  </span>
                 </div>
                 <div className="flex items-center">
                   <Clock className="h-4 w-4 text-charcoal/60 mr-1" />
-                  <span className="font-mono text-xs text-charcoal/60">{article.readTime}</span>
+                  <span className="font-mono text-xs text-charcoal/60">
+                    {article.readTime}
+                  </span>
                 </div>
-                <Button variant="ghost" size="icon" className="ml-2 text-charcoal/60 hover:text-leafy">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="ml-2 text-charcoal/60 hover:text-leafy"
+                >
                   <Share2 className="h-4 w-4" />
                 </Button>
               </div>
@@ -260,7 +294,12 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
         {/* Hero Image */}
         <section className="container mx-auto mb-12 px-4 md:px-6 lg:px-8">
           <div className="max-w-[1200px] mx-auto relative h-[300px] md:h-[500px] shadow-sm">
-            <Image src={article.heroImage || "/placeholder.svg"} alt={article.title} fill className="object-cover" />
+            <Image
+              src={article.heroImage || "/placeholder.svg"}
+              alt={article.title}
+              fill
+              className="object-cover"
+            />
           </div>
         </section>
 
@@ -273,12 +312,17 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                 switch (block.type) {
                   case "paragraph":
                     return (
-                      <p key={index} className="font-mono text-sm md:text-base text-charcoal/90 leading-relaxed mb-6">
+                      <p
+                        key={index}
+                        className="font-mono text-sm md:text-base text-charcoal/90 leading-relaxed mb-6"
+                      >
                         {block.content}
                       </p>
-                    )
+                    );
                   case "heading":
-                    const headingId = (block as any).id || block.content.toLowerCase().replace(/\s+/g, "-")
+                    const headingId =
+                      (block as any).id ||
+                      block.content.toLowerCase().replace(/\s+/g, "-");
                     return (
                       <h2
                         key={index}
@@ -288,7 +332,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                       >
                         {block.content}
                       </h2>
-                    )
+                    );
                   case "quote":
                     return (
                       <blockquote
@@ -296,9 +340,13 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                         className="border-l-4 border-leafy pl-4 italic my-8 font-mono text-sm md:text-base text-charcoal/80"
                       >
                         <p>{block.content}</p>
-                        {block.author && <cite className="block font-sans text-sm mt-2">— {block.author}</cite>}
+                        {block.author && (
+                          <cite className="block font-sans text-sm mt-2">
+                            — {block.author}
+                          </cite>
+                        )}
                       </blockquote>
-                    )
+                    );
                   case "image":
                     return (
                       <figure key={index} className="my-8">
@@ -316,9 +364,9 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                           </figcaption>
                         )}
                       </figure>
-                    )
+                    );
                   default:
-                    return null
+                    return null;
                 }
               })}
 
@@ -329,8 +377,10 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                   {article.tags.map((tag, index) => (
                     <Link
                       key={index}
-                      href={`/category/${tag.toLowerCase().replace(/\s+/g, "-")}`}
-                      className="px-3 py-1 bg-gradient-to-r from-forest to-leafy/40 border border-charcoal/20 font-mono text-xs text-white hover:bg-gradient-to-r hover:from-forest hover:to-leafy/60 transition-colors shadow-sm"
+                      href={`/category/${tag
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
+                      className="px-3 py-1 bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC]/40 border border-charcoal/20 font-mono text-xs text-black hover:bg-gradient-to-r hover:from-[#328E6E] hover:via-[#67AE6E] hover:via-[#90C67C] hover:to-[#E1EEBC]/60 transition-colors shadow-sm"
                     >
                       {tag}
                     </Link>
@@ -345,18 +395,24 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                     <User className="h-8 w-8" />
                   </div>
                   <div className="ml-4">
-                    <h3 className="font-sans text-xl font-light">{article.author}</h3>
-                    <p className="font-mono text-xs text-charcoal/60 mb-2">{article.authorTitle}</p>
+                    <h3 className="font-sans text-xl font-light">
+                      {article.author}
+                    </h3>
+                    <p className="font-mono text-xs text-charcoal/60 mb-2">
+                      {article.authorTitle}
+                    </p>
                     <p className="font-mono text-sm text-charcoal/80">
-                      Sarah Johnson is a political correspondent with over 15 years of experience covering Australian
-                      and international politics. She specializes in climate policy, international relations, and
-                      economic analysis.
+                      Sarah Johnson is a political correspondent with over 15
+                      years of experience covering Australian and international
+                      politics. She specializes in climate policy, international
+                      relations, and economic analysis.
                     </p>
                     <Button
                       variant="ghost"
                       className="font-mono text-xs text-leafy p-0 mt-2 hover:bg-transparent hover:text-leafy"
                     >
-                      VIEW ALL ARTICLES <ChevronRight className="ml-1 h-3 w-3" />
+                      VIEW ALL ARTICLES{" "}
+                      <ChevronRight className="ml-1 h-3 w-3" />
                     </Button>
                   </div>
                 </div>
@@ -366,7 +422,9 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
             {/* Table of Contents Sidebar */}
             <aside className="lg:w-64 order-2 shrink-0">
               <div className="lg:sticky lg:top-24 p-4 border border-charcoal/20 shadow-sm bg-offwhite">
-                <h2 className="font-sans text-lg font-light text-black mb-4">In This Article</h2>
+                <h2 className="font-sans text-lg font-light text-black mb-4">
+                  In This Article
+                </h2>
                 <nav aria-label="Table of contents">
                   <ul className="space-y-3">
                     {sections.map((section) => (
@@ -374,9 +432,15 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                         <button
                           onClick={() => scrollToSection(section.id)}
                           className={`font-mono text-xs text-left w-full hover:text-leafy transition-colors ${
-                            activeSection === section.id ? "text-leafy font-medium" : "text-charcoal/80"
+                            activeSection === section.id
+                              ? "text-leafy font-medium"
+                              : "text-charcoal/80"
                           }`}
-                          aria-current={activeSection === section.id ? "location" : undefined}
+                          aria-current={
+                            activeSection === section.id
+                              ? "location"
+                              : undefined
+                          }
                         >
                           {section.title}
                         </button>
@@ -389,7 +453,9 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
 
                 <div className="space-y-3">
                   <button
-                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                    onClick={() =>
+                      window.scrollTo({ top: 0, behavior: "smooth" })
+                    }
                     className="font-mono text-xs text-charcoal/80 hover:text-leafy transition-colors w-full text-left"
                   >
                     Back to top
@@ -417,7 +483,9 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                       aria-valuenow={Math.round(scrollProgress)}
                     />
                   </div>
-                  <p className="font-mono text-xs text-charcoal/60 mt-2">Reading progress</p>
+                  <p className="font-mono text-xs text-charcoal/60 mt-2">
+                    Reading progress
+                  </p>
                 </div>
               </div>
             </aside>
@@ -428,7 +496,9 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
         <section className="container mx-auto mb-16 px-4 md:px-6 lg:px-8">
           <div className="max-w-[1200px] mx-auto">
             <div className="flex items-center mb-8">
-              <h3 className="font-sans text-2xl font-light text-black">Related Articles</h3>
+              <h3 className="font-sans text-2xl font-light text-black">
+                Related Articles
+              </h3>
               <div className="h-px flex-1 bg-charcoal/20 mx-4"></div>
             </div>
 
@@ -445,12 +515,14 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                       fill
                       className="object-cover"
                     />
-                    <div className="absolute top-0 left-0 bg-gradient-to-r from-forest to-leafy/40 px-3 py-1">
+                    <div className="absolute top-0 left-0 bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC]/40 px-3 py-1 text-black">
                       <Link
                         href={`/category/${related.category.toLowerCase()}`}
                         className="text-white hover:text-white/90"
                       >
-                        <span className="font-mono text-xs">{related.category}</span>
+                        <span className="font-mono text-xs">
+                          {related.category}
+                        </span>
                       </Link>
                     </div>
                   </div>
@@ -461,7 +533,9 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                       </h4>
                     </Link>
                     <div className="mt-4 flex justify-between items-center">
-                      <span className="font-mono text-xs text-charcoal/60">{related.time}</span>
+                      <span className="font-mono text-xs text-charcoal/60">
+                        {related.time}
+                      </span>
                       <Link href={`/article/${related.slug || "article-slug"}`}>
                         <Button
                           variant="ghost"
@@ -484,9 +558,12 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
           <div className="max-w-[1200px] mx-auto">
             <div className="border border-charcoal/20 p-8 bg-forest/5 shadow-sm">
               <div className="max-w-2xl mx-auto text-center">
-                <h3 className="font-sans text-2xl font-light text-black mb-2">Stay Informed</h3>
+                <h3 className="font-sans text-2xl font-light text-black mb-2">
+                  Stay Informed
+                </h3>
                 <p className="font-mono text-sm text-charcoal/80 mb-6">
-                  Subscribe to our weekly newsletter for in-depth analysis and exclusive content.
+                  Subscribe to our weekly newsletter for in-depth analysis and
+                  exclusive content.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
                   <input
@@ -494,7 +571,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                     placeholder="Your email address"
                     className="px-3 py-2 border border-charcoal/20 font-mono text-xs w-full focus:outline-none focus:ring-2 focus:ring-leafy"
                   />
-                  <Button className="bg-gradient-to-r from-forest to-leafy/60 hover:from-forest hover:to-leafy/80 text-white font-mono text-xs">
+                  <Button className="bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC] hover:from-[#328E6E] hover:via-[#67AE6E] hover:via-[#90C67C] hover:to-[#E1EEBC] text-black font-mono text-xs">
                     SUBSCRIBE
                   </Button>
                 </div>
@@ -506,5 +583,5 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
 
       {/* Remove the footer from here - it's already in the root layout */}
     </div>
-  )
+  );
 }
