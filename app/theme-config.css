@@ -1,0 +1,43 @@
+:root {
+  /* Base colors */
+  --color-leafy: 132, 204, 22;
+  --color-leafy-light: 163, 230, 53;
+  --color-leafy-dark: 101, 163, 13;
+
+  --color-forest: 22, 101, 52;
+  --color-forest-light: 34, 197, 94;
+  --color-forest-dark: 20, 83, 45;
+
+  --color-charcoal: 54, 69, 79;
+  --color-charcoal-dark: 44, 56, 64;
+
+  --color-offwhite: 249, 249, 249;
+
+  /* Functional colors */
+  --color-success: 16, 185, 129;
+  --color-warning: 245, 158, 11;
+  --color-error: 239, 68, 68;
+  --color-info: 59, 130, 246;
+
+  /* Typography */
+  --font-sans: "Alegreya Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --font-serif: "Cinzel", serif;
+
+  /* Border radius */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-logo: 4px 4px 0px 0px rgba(22, 101, 52, 0.8);
+}
+
+/* Dark mode overrides */
+.dark {
+  /* Adjust colors for dark mode if needed */
+}
