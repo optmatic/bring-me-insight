@@ -1,58 +1,64 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ChevronRight, Mail } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect } from "react";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { ChevronRight, Mail, ArrowRight, TrendingUp, Globe, Clock, MapPin, MessageSquare } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { useEffect } from "react"
+import { componentStyles } from "@/lib/styles"
 
 export default function Home() {
   // Scroll to top on page load
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
-    <div className="min-h-screen bg-offwhite flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-offwhite to-white flex flex-col">
       <main className="flex-1">
         {/* Hero Section */}
         <section className="container mx-auto mt-8 px-4 md:px-6 lg:px-8">
           <div className="max-w-[1200px] mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 border border-charcoal/20 p-4 md:p-8 shadow-sm">
-              <div className="lg:col-span-7 flex flex-col justify-center">
-                <span className="font-mono text-xs text-leafy uppercase tracking-wider mb-2">
-                  FEATURED STORY
-                </span>
-                <Link href="/article/australia-climate-policy-challenges">
-                  <h2 className="font-sans text-3xl md:text-4xl lg:text-5xl font-light text-black mb-4 leading-tight">
-                    Australia's Climate Policy Faces New Challenges in Global
-                    Context
-                  </h2>
-                </Link>
-                <p className="font-mono text-sm text-charcoal/80 mb-6">
-                  As international pressure mounts, Australia navigates complex
-                  terrain between economic interests and environmental
-                  commitments.
-                </p>
-                <div className="flex items-center">
-                  <Link href="/article/australia-climate-policy-challenges">
-                    <Button className="bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC] hover:from-[#328E6E] hover:via-[#67AE6E] hover:via-[#90C67C] hover:to-[#E1EEBC] text-black font-mono text-xs">
-                      READ FEATURE <ChevronRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </Link>
-                  <span className="ml-4 font-mono text-xs text-charcoal/60">
-                    10 MIN READ
+            <div
+              className={`${componentStyles.card.DEFAULT} ${componentStyles.card.hover} overflow-hidden dark-edge shadow-elegant-lg hover:shadow-modern-lg backdrop-blur-[2px]`}
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-4 md:p-8">
+                <div className="lg:col-span-7 flex flex-col justify-center">
+                  <span className="font-mono text-xs text-lime-500 uppercase tracking-wider mb-2 inline-flex items-center">
+                    <TrendingUp className="mr-1 h-3 w-3" /> FEATURED STORY
                   </span>
+                  <Link href="/article/australia-climate-policy-challenges">
+                    <h2 className="gothic-title font-gothic text-3xl md:text-4xl lg:text-5xl font-bold text-charcoal-darker mb-4 leading-tight group-hover:text-forest transition-colors uppercase tracking-tight">
+                      Australia's Climate Policy Faces New Challenges in Global Context
+                    </h2>
+                  </Link>
+                  <p className="font-mono text-sm text-charcoal/80 mb-6">
+                    As international pressure mounts, Australia navigates complex terrain between economic interests and
+                    environmental commitments.
+                  </p>
+                  <div className="flex items-center">
+                    <Link href="/article/australia-climate-policy-challenges">
+                      <Button className="bg-gradient-to-r from-lime-300 to-lime-500 hover:from-lime-400 hover:to-lime-600 text-forest-dark font-medium font-mono text-xs shadow-sm hover:shadow-md border border-lime-400/20">
+                        READ FEATURE <ChevronRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
+                    <span className="ml-4 font-mono text-xs text-charcoal/60 flex items-center">
+                      <Clock className="mr-1 h-3 w-3" /> 10 MIN READ
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div className="lg:col-span-5 relative min-h-[300px] md:min-h-[400px]">
-                <Image
-                  src="/placeholder.svg?key=sit4r"
-                  alt="Australia's Climate Policy"
-                  fill
-                  className="object-cover"
-                />
+                <div className="lg:col-span-5 relative min-h-[300px] md:min-h-[400px]">
+                  <div className="absolute inset-0 overflow-hidden shadow-elegant-md">
+                    <Image
+                      src="/australia-climate-policy.png"
+                      alt="Australia's Climate Policy"
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-transparent to-charcoal-darker/20 mix-blend-overlay"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -62,15 +68,15 @@ export default function Home() {
         <section className="container mx-auto mt-16 px-4 md:px-6 lg:px-8">
           <div className="max-w-[1200px] mx-auto">
             <div className="flex items-center justify-between mb-8">
-              <h3 className="font-sans text-2xl font-light text-black">
-                Latest Articles
+              <h3 className="gothic-title font-gothic text-2xl font-bold text-charcoal-darker flex items-center uppercase tracking-tight">
+                <TrendingUp className="mr-2 h-5 w-5 text-lime-500" /> Latest Articles
               </h3>
-              <div className="h-px flex-1 bg-charcoal/20 mx-4"></div>
+              <div className="h-px flex-1 bg-gradient-to-r from-charcoal/5 via-charcoal/10 to-charcoal/5 mx-4"></div>
               <Link
                 href="#"
-                className="font-mono text-xs text-leafy hover:underline"
+                className="font-mono text-xs text-lime-500 hover:text-forest transition-colors flex items-center"
               >
-                VIEW ALL
+                VIEW ALL <ArrowRight className="ml-1 h-3 w-3" />
               </Link>
             </div>
 
@@ -79,88 +85,84 @@ export default function Home() {
                 {
                   category: "POLITICS",
                   title: "Electoral Reform Bill Sparks Debate in Parliament",
-                  image: "/placeholder.svg?key=pxylr",
+                  image: "/electoral-reform-debate.png",
                   time: "3 HOURS AGO",
                   slug: "electoral-reform-bill-debate",
                 },
                 {
                   category: "SOCIETY",
-                  title:
-                    "Indigenous Voice Proposal Gains Momentum Across States",
-                  image: "/placeholder.svg?key=6gjpx",
+                  title: "Indigenous Voice Proposal Gains Momentum Across States",
+                  image: "/placeholder.svg?height=400&width=600&query=indigenous voice proposal",
                   time: "5 HOURS AGO",
                   slug: "indigenous-voice-proposal-momentum",
                 },
                 {
                   category: "ECONOMY",
                   title: "Reserve Bank Signals Shift in Interest Rate Strategy",
-                  image: "/placeholder.svg?key=4gvoa",
+                  image: "/placeholder.svg?height=400&width=600&query=reserve bank interest rates",
                   time: "YESTERDAY",
                   slug: "reserve-bank-interest-rate-strategy",
                 },
                 {
                   category: "WORLD",
-                  title:
-                    "Pacific Nations Summit Addresses Regional Security Concerns",
-                  image: "/placeholder.svg?key=m1c5n",
+                  title: "Pacific Nations Summit Addresses Regional Security Concerns",
+                  image: "/placeholder.svg?height=400&width=600&query=pacific nations summit",
                   time: "2 DAYS AGO",
                   slug: "pacific-nations-summit-security",
                 },
                 {
                   category: "CLIMATE",
-                  title:
-                    "Renewable Energy Projects Accelerate in Rural Communities",
-                  image: "/placeholder.svg?key=dtor6",
+                  title: "Renewable Energy Projects Accelerate in Rural Communities",
+                  image: "/placeholder.svg?height=400&width=600&query=renewable energy rural",
                   time: "3 DAYS AGO",
                   slug: "renewable-energy-rural-communities",
                 },
                 {
                   category: "TECH",
                   title: "Government Unveils New Digital Identity Framework",
-                  image: "/placeholder.svg?key=71rnp",
+                  image: "/placeholder.svg?height=400&width=600&query=digital identity framework",
                   time: "4 DAYS AGO",
                   slug: "government-digital-identity-framework",
                 },
               ].map((article, index) => (
                 <div
                   key={index}
-                  className="border border-charcoal/20 group hover:border-leafy/50 transition-colors shadow-sm"
+                  className={`${componentStyles.card.DEFAULT} ${componentStyles.card.hover} dark-edge shadow-elegant-md hover:shadow-modern-md card-modern`}
                 >
-                  <div className="relative h-48">
+                  <div className="relative h-48 overflow-hidden">
                     <Image
                       src={article.image || "/placeholder.svg"}
                       alt={article.title}
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute top-0 left-0 bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC]/40 px-3 py-1 border-2 border-charcoal/50 text-black">
+                    <div className="absolute inset-0 bg-gradient-to-br from-transparent to-charcoal-darker/20 mix-blend-overlay"></div>
+                    <div className="absolute top-0 left-0 bg-gradient-to-r from-lime-300 to-lime-500 px-3 py-1 shadow-elegant-sm">
                       <Link
                         href={`/category/${article.category.toLowerCase()}`}
-                        className="text-black hover:text-white/90"
+                        className="text-forest-dark font-medium hover:text-forest/90"
                       >
-                        <span className="font-mono text-xs">
-                          {article.category}
-                        </span>
+                        <span className="font-mono text-xs">{article.category}</span>
                       </Link>
                     </div>
                   </div>
                   <div className="p-4">
                     <Link href={`/article/${article.slug}`}>
-                      <h4 className="font-sans text-xl font-light text-black group-hover:text-leafy transition-colors">
+                      <h4 className="gothic-text font-gothic text-xl font-bold text-charcoal-darker group-hover:text-forest transition-colors">
                         {article.title}
                       </h4>
                     </Link>
                     <div className="mt-4 flex justify-between items-center">
-                      <span className="font-mono text-xs text-charcoal/60">
-                        {article.time}
+                      <span className="font-mono text-xs text-charcoal/60 flex items-center">
+                        <Clock className="mr-1 h-3 w-3" /> {article.time}
                       </span>
                       <Link href={`/article/${article.slug}`}>
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="font-mono text-xs text-leafy p-0 hover:bg-transparent hover:text-leafy"
+                          className="font-mono text-xs text-lime-500 p-0 hover:bg-transparent hover:text-forest transition-colors"
                         >
-                          READ <ChevronRight className="ml-1 h-3 w-3" />
+                          READ <ArrowRight className="ml-1 h-3 w-3" />
                         </Button>
                       </Link>
                     </div>
@@ -179,48 +181,46 @@ export default function Home() {
               <div>
                 <div className="flex items-center mb-6">
                   <Link href="/category/australia">
-                    <h3 className="font-sans text-xl font-light text-black hover:text-leafy transition-colors">
-                      Australian Perspective
+                    <h3 className="gothic-title font-gothic text-xl font-bold text-charcoal-darker hover:text-forest transition-colors flex items-center uppercase tracking-tight">
+                      <MapPin className="mr-2 h-4 w-4 text-lime-500" /> Australian Perspective
                     </h3>
                   </Link>
-                  <div className="h-px flex-1 bg-charcoal/20 mx-4"></div>
+                  <div className="h-px flex-1 bg-gradient-to-r from-charcoal/5 via-charcoal/10 to-charcoal/5 mx-4"></div>
                 </div>
 
-                <div className="border border-charcoal/20 p-4 shadow-sm">
-                  <div className="relative h-48 mb-4">
+                <div
+                  className={`${componentStyles.card.DEFAULT} ${componentStyles.card.hover} p-4 dark-edge shadow-elegant-md hover:shadow-modern-md card-modern`}
+                >
+                  <div className="relative h-48 mb-4 overflow-hidden shadow-elegant-sm">
                     <Image
-                      src="/placeholder.svg?key=ujcfk"
+                      src="/placeholder.svg?height=400&width=600&query=australian identity politics"
                       alt="Australian Perspective"
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-br from-transparent to-charcoal-darker/20 mix-blend-overlay"></div>
                   </div>
-                  <span className="font-mono text-xs text-leafy">ANALYSIS</span>
-                  <h4 className="font-sans text-xl font-light text-black mt-2">
+                  <span className="font-mono text-xs text-lime-500">ANALYSIS</span>
+                  <h4 className="gothic-text font-gothic text-xl font-bold text-charcoal-darker mt-2">
                     <Link
                       href="/article/australian-identity-polarized-era"
-                      className="hover:text-leafy transition-colors"
+                      className="hover:text-forest transition-colors"
                     >
-                      The Shifting Landscape of Australian Identity in a
-                      Polarized Era
+                      The Shifting Landscape of Australian Identity in a Polarized Era
                     </Link>
                   </h4>
                   <p className="font-mono text-xs text-charcoal/80 mt-2">
-                    Examining how national identity evolves amid political and
-                    cultural divisions.
+                    Examining how national identity evolves amid political and cultural divisions.
                   </p>
                   <div className="mt-4 flex justify-between items-center">
-                    <span className="font-mono text-xs text-charcoal/60">
-                      BY SARAH JOHNSON
-                    </span>
+                    <span className="font-mono text-xs text-charcoal/60">BY SARAH JOHNSON</span>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="font-mono text-xs text-leafy p-0 hover:bg-transparent hover:text-leafy"
+                      className="font-mono text-xs text-lime-500 p-0 hover:bg-transparent hover:text-forest transition-colors"
                     >
                       <Link href="/article/australian-identity-polarized-era">
-                        READ FULL ANALYSIS{" "}
-                        <ChevronRight className="ml-1 h-3 w-3" />
+                        READ FULL ANALYSIS <ArrowRight className="ml-1 h-3 w-3" />
                       </Link>
                     </Button>
                   </div>
@@ -231,50 +231,46 @@ export default function Home() {
               <div>
                 <div className="flex items-center mb-6">
                   <Link href="/category/world">
-                    <h3 className="font-sans text-xl font-light text-black hover:text-leafy transition-colors">
-                      Global Perspective
+                    <h3 className="gothic-title font-gothic text-xl font-bold text-charcoal-darker hover:text-forest transition-colors flex items-center uppercase tracking-tight">
+                      <Globe className="mr-2 h-4 w-4 text-lime-500" /> Global Perspective
                     </h3>
                   </Link>
-                  <div className="h-px flex-1 bg-charcoal/20 mx-4"></div>
+                  <div className="h-px flex-1 bg-gradient-to-r from-charcoal/5 via-charcoal/10 to-charcoal/5 mx-4"></div>
                 </div>
 
-                <div className="border border-charcoal/20 p-4 shadow-sm">
-                  <div className="relative h-48 mb-4">
+                <div
+                  className={`${componentStyles.card.DEFAULT} ${componentStyles.card.hover} p-4 dark-edge shadow-elegant-md hover:shadow-modern-md card-modern`}
+                >
+                  <div className="relative h-48 mb-4 overflow-hidden shadow-elegant-sm">
                     <Image
-                      src="/placeholder.svg?key=81hrg"
+                      src="/placeholder.svg?height=400&width=600&query=global democratic institutions"
                       alt="Global Perspective"
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-br from-transparent to-charcoal-darker/20 mix-blend-overlay"></div>
                   </div>
-                  <span className="font-mono text-xs text-leafy">
-                    INTERNATIONAL
-                  </span>
-                  <h4 className="font-sans text-xl font-light text-black mt-2">
+                  <span className="font-mono text-xs text-lime-500">INTERNATIONAL</span>
+                  <h4 className="gothic-text font-gothic text-xl font-bold text-charcoal-darker mt-2">
                     <Link
                       href="/article/democratic-institutions-populist-movements"
-                      className="hover:text-leafy transition-colors"
+                      className="hover:text-forest transition-colors"
                     >
-                      How Democratic Institutions Are Responding to Populist
-                      Movements Worldwide
+                      How Democratic Institutions Are Responding to Populist Movements Worldwide
                     </Link>
                   </h4>
                   <p className="font-mono text-xs text-charcoal/80 mt-2">
-                    A comparative analysis of institutional resilience across
-                    democratic systems.
+                    A comparative analysis of institutional resilience across democratic systems.
                   </p>
                   <div className="mt-4 flex justify-between items-center">
-                    <span className="font-mono text-xs text-charcoal/60">
-                      BY MICHAEL CHEN
-                    </span>
+                    <span className="font-mono text-xs text-charcoal/60">BY MICHAEL CHEN</span>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="font-mono text-xs text-leafy p-0 hover:bg-transparent hover:text-leafy"
+                      className="font-mono text-xs text-lime-500 p-0 hover:bg-transparent hover:text-forest transition-colors"
                     >
                       <Link href="/article/democratic-institutions-populist-movements">
-                        READ FULL ANALYSIS{" "}
-                        <ChevronRight className="ml-1 h-3 w-3" />
+                        READ FULL ANALYSIS <ArrowRight className="ml-1 h-3 w-3" />
                       </Link>
                     </Button>
                   </div>
@@ -288,15 +284,15 @@ export default function Home() {
         <section className="container mx-auto mt-16 px-4 md:px-6 lg:px-8">
           <div className="max-w-[1200px] mx-auto">
             <div className="flex items-center mb-8">
-              <h3 className="font-sans text-2xl font-light text-black">
-                Opinion
+              <h3 className="gothic-title font-gothic text-2xl font-bold text-charcoal-darker flex items-center uppercase tracking-tight">
+                <MessageSquare className="mr-2 h-5 w-5 text-lime-500" /> Opinion
               </h3>
-              <div className="h-px flex-1 bg-charcoal/20 mx-4"></div>
+              <div className="h-px flex-1 bg-gradient-to-r from-charcoal/5 via-charcoal/10 to-charcoal/5 mx-4"></div>
               <Link
                 href="#"
-                className="font-mono text-xs text-leafy hover:underline"
+                className="font-mono text-xs text-lime-500 hover:text-forest transition-colors flex items-center"
               >
-                VIEW ALL
+                VIEW ALL <ArrowRight className="ml-1 h-3 w-3" />
               </Link>
             </div>
 
@@ -304,52 +300,41 @@ export default function Home() {
               {[
                 {
                   author: "PROFESSOR ALAN DAVIES",
-                  title:
-                    "Why Australia's Education Reform Needs a Complete Rethink",
-                  excerpt:
-                    "Current approaches fail to address fundamental challenges in our education system.",
+                  title: "Why Australia's Education Reform Needs a Complete Rethink",
+                  excerpt: "Current approaches fail to address fundamental challenges in our education system.",
                   slug: "australia-education-reform-rethink",
                 },
                 {
                   author: "DR. LISA WONG",
                   title: "The False Promise of Quick Climate Solutions",
-                  excerpt:
-                    "Technology alone won't save us from the climate crisis without policy change.",
+                  excerpt: "Technology alone won't save us from the climate crisis without policy change.",
                   slug: "false-promise-quick-climate-solutions",
                 },
                 {
                   author: "JAMES MCINTYRE",
                   title: "Media Diversity Is Essential for Democratic Health",
-                  excerpt:
-                    "Concentration of media ownership threatens the quality of our public discourse.",
+                  excerpt: "Concentration of media ownership threatens the quality of our public discourse.",
                   slug: "media-diversity-democratic-health",
                 },
               ].map((opinion, index) => (
                 <div
                   key={index}
-                  className="border-t-2 border-forest pt-4 group"
+                  className={`${componentStyles.card.DEFAULT} ${componentStyles.card.hover} p-6 border-t-4 border-forest dark-edge shadow-elegant-md hover:shadow-modern-md card-modern`}
                 >
-                  <span className="font-mono text-xs text-charcoal/70">
-                    {opinion.author}
-                  </span>
-                  <h4 className="font-sans text-xl font-light text-black mt-2 group-hover:text-leafy transition-colors">
-                    <Link
-                      href={`/article/${opinion.slug}`}
-                      className="hover:text-leafy transition-colors"
-                    >
+                  <span className="font-mono text-xs text-charcoal/70">{opinion.author}</span>
+                  <h4 className="gothic-text font-gothic text-xl font-bold text-charcoal-darker mt-2 group-hover:text-forest transition-colors">
+                    <Link href={`/article/${opinion.slug}`} className="hover:text-forest transition-colors">
                       {opinion.title}
                     </Link>
                   </h4>
-                  <p className="font-mono text-xs text-charcoal/80 mt-2">
-                    {opinion.excerpt}
-                  </p>
+                  <p className="font-mono text-xs text-charcoal/80 mt-2">{opinion.excerpt}</p>
                   <Link href={`/article/${opinion.slug}`}>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="font-mono text-xs text-leafy p-0 mt-4 hover:bg-transparent hover:text-leafy"
+                      className="font-mono text-xs text-lime-500 p-0 mt-4 hover:bg-transparent hover:text-forest transition-colors"
                     >
-                      READ OPINION <ChevronRight className="ml-1 h-3 w-3" />
+                      READ OPINION <ArrowRight className="ml-1 h-3 w-3" />
                     </Button>
                   </Link>
                 </div>
@@ -361,23 +346,26 @@ export default function Home() {
         {/* Newsletter Signup */}
         <section className="container mx-auto mt-16 mb-16 px-4 md:px-6 lg:px-8">
           <div className="max-w-[1200px] mx-auto">
-            <div className="border border-charcoal/20 p-8 bg-forest/5 shadow-sm">
+            <div
+              className={`${componentStyles.card.glass} p-8 bg-gradient-to-br from-forest/5 to-lime-500/5 shadow-elegant-lg hover:shadow-modern-lg dark-edge card-modern`}
+            >
               <div className="max-w-2xl mx-auto text-center">
-                <Mail className="h-8 w-8 text-leafy mx-auto mb-4" />
-                <h3 className="font-sans text-2xl font-light text-black mb-2">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-forest to-lime-500/70 flex items-center justify-center shadow-elegant-md">
+                  <Mail className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="gothic-title font-gothic text-2xl font-bold text-charcoal-darker mb-2 uppercase tracking-tight">
                   Stay Informed
                 </h3>
                 <p className="font-mono text-sm text-charcoal/80 mb-6">
-                  Subscribe to our weekly newsletter for in-depth analysis and
-                  exclusive content.
+                  Subscribe to our weekly newsletter for in-depth analysis and exclusive content.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
                   <Input
                     type="email"
                     placeholder="Your email address"
-                    className="font-mono text-xs border-charcoal/20"
+                    className="font-mono text-xs border-charcoal/10 focus-visible:ring-lime-500 shadow-elegant-sm focus:shadow-modern-sm transition-shadow duration-300 dark-edge"
                   />
-                  <Button className="bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC] hover:from-[#328E6E] hover:via-[#67AE6E] hover:via-[#90C67C] hover:to-[#E1EEBC] text-black font-mono text-xs">
+                  <Button className="bg-gradient-to-r from-lime-300 to-lime-500 hover:from-lime-400 hover:to-lime-600 text-forest-dark font-medium font-mono text-xs shadow-sm hover:shadow-md border border-lime-400/20">
                     SUBSCRIBE
                   </Button>
                 </div>
@@ -390,5 +378,5 @@ export default function Home() {
         </section>
       </main>
     </div>
-  );
+  )
 }

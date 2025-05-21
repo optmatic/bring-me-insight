@@ -2,34 +2,43 @@
 export const colors = {
   // Primary colors
   leafy: {
-    DEFAULT: "#B8D576", // Lime, leafy green
+    DEFAULT: "#84cc16", // Lime green as primary accent
     light: "#a3e635",
     dark: "#65a30d",
   },
   forest: {
-    DEFAULT: "#3A7D44", // Forest, gumtree green
+    DEFAULT: "#15803d", // Deeper forest green
     light: "#22c55e",
-    dark: "#14532d",
+    dark: "#166534",
   },
   charcoal: {
-    DEFAULT: "#36454F",
-    dark: "#2c3840",
+    DEFAULT: "#1e293b", // Darker slate gray
+    dark: "#0f172a", // Darker shade
+    darker: "#020617", // Even darker shade for subtle black tones
   },
-  offwhite: "#f9f9f9",
+  offwhite: "#f8fafc", // Slightly cooler white
+
+  // Accent colors - now using lime as primary accent
+  accent: {
+    DEFAULT: "#84cc16", // Changed to lime green
+    light: "#a3e635",
+    dark: "#65a30d",
+  },
 
   // UI states
   success: "#10b981", // Emerald
   warning: "#f59e0b", // Amber
   error: "#ef4444", // Red
   info: "#3b82f6", // Blue
-};
+}
 
 // Typography
 export const typography = {
   fontFamily: {
-    sans: "Alegreya Sans, sans-serif",
-    mono: "IBM Plex Mono, monospace",
-    serif: "Cinzel, serif",
+    sans: "'Inter', sans-serif", // Simplified to just Inter for consistency
+    mono: "'JetBrains Mono', monospace", // Simplified to just JetBrains Mono
+    serif: "'Cinzel', serif",
+    gothic: "'Bebas Neue', sans-serif", // Simplified to just Bebas Neue
   },
   fontSize: {
     xs: "0.75rem",
@@ -48,99 +57,115 @@ export const typography = {
     medium: "500",
     bold: "700",
   },
-};
+}
 
 // Gradients
 export const gradients = {
-  primary:
-    "bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC] text-black",
-  primaryHover:
-    "hover:from-[#328E6E] hover:via-[#67AE6E] hover:via-[#90C67C] hover:to-[#E1EEBC] hover:text-black",
-  tag: "bg-gradient-to-r from-[#328E6E] via-[#67AE6E] via-[#90C67C] to-[#E1EEBC]/40 text-black",
-  tagHover:
-    "hover:bg-gradient-to-r hover:from-[#328E6E] hover:via-[#67AE6E] hover:via-[#90C67C] hover:to-[#E1EEBC]/60 hover:text-black",
-};
-
-// Spacing
-export const spacing = {
-  container: {
-    padding: {
-      DEFAULT: "1rem",
-      sm: "2rem",
-      lg: "4rem",
-      xl: "5rem",
-      "2xl": "6rem",
-    },
-    maxWidth: "1200px",
-  },
-};
-
-// Borders
-export const borders = {
-  radius: {
-    DEFAULT: "0.25rem",
-    md: "0.375rem",
-    lg: "0.5rem",
-    full: "9999px",
-  },
-  width: {
-    DEFAULT: "1px",
-    medium: "2px",
-    thick: "4px",
-  },
-};
+  primary: "bg-gradient-to-r from-lime-300 to-lime-500",
+  primaryHover: "hover:from-lime-400 hover:to-lime-600",
+  tag: "bg-gradient-to-r from-lime-300 to-lime-500",
+  tagHover: "hover:bg-gradient-to-r hover:from-lime-400 hover:to-lime-600",
+  accent: "bg-gradient-to-r from-lime-300 to-lime-500", // Changed to lime gradient
+  accentHover: "hover:from-lime-400 hover:to-lime-600", // Changed to lime hover
+  card: "bg-gradient-to-br from-white to-offwhite",
+  glass: "backdrop-blur-md bg-white/70 dark:bg-charcoal-dark/70",
+  darkEdge: "bg-gradient-to-b from-transparent to-charcoal-darker/5", // Added dark edge gradient
+  darkCorner: "bg-gradient-to-br from-transparent to-charcoal-darker/10", // Added dark corner gradient
+  // Modern futuristic gradients
+  modern: "bg-gradient-to-r from-lime-400/90 via-lime-500/80 to-lime-600/90",
+  modernDark: "bg-gradient-to-r from-charcoal-dark/90 via-charcoal/80 to-charcoal-dark/90",
+  glow: "bg-gradient-to-r from-lime-400/20 via-lime-500/30 to-lime-400/20",
+  // Inverse gradients
+  inverse: "bg-gradient-to-r from-charcoal to-charcoal-dark",
+  inverseHover: "hover:from-charcoal-dark hover:to-charcoal-darker",
+}
 
 // Shadows
 export const shadows = {
-  sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-  DEFAULT: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
+  sm: "0 1px 2px rgba(0, 0, 0, 0.05)",
+  DEFAULT: "0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)",
   md: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
   lg: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-  logo: "4px 4px 0px 0px rgba(22,101,52,0.8)",
-};
+  xl: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+  logo: "0 10px 15px -3px rgba(2,6,23,0.2), 0 4px 6px -2px rgba(2,6,23,0.1)",
+  card: "0 4px 20px rgba(2, 6, 23, 0.08)",
+  hover: "0 10px 25px rgba(2, 6, 23, 0.12)",
+  inner: "inset 0 2px 4px 0 rgba(2, 6, 23, 0.06)",
+  // Modern futuristic shadows
+  modern: {
+    sm: "0 4px 12px -2px rgba(132, 204, 22, 0.15), 0 0 0 1px rgba(132, 204, 22, 0.08)",
+    md: "0 8px 20px -4px rgba(132, 204, 22, 0.2), 0 0 0 1px rgba(132, 204, 22, 0.1)",
+    lg: "0 12px 30px -6px rgba(132, 204, 22, 0.25), 0 0 0 1px rgba(132, 204, 22, 0.12)",
+    glow: "0 0 15px rgba(132, 204, 22, 0.4)",
+  },
+  // Elegant shadows
+  elegant: {
+    sm: "0 2px 8px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.02)",
+    md: "0 4px 16px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.02)",
+    lg: "0 8px 24px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.02)",
+  },
+}
 
 // Common component styles
 export const componentStyles = {
-  // Button styles
+  // Button styles with consistent 2D design
   button: {
-    primary: `${gradients.primary} ${gradients.primaryHover} text-black font-mono text-xs`,
+    // Base styles for all buttons - REMOVED 3D effects
+    base: "rounded-full font-medium font-mono text-xs transition-all duration-300",
+
+    // Primary button (lime gradient) - REMOVED 3D effects
+    primary: `bg-gradient-to-r from-lime-300 to-lime-500 hover:from-lime-400 hover:to-lime-600 text-forest-dark border border-lime-400/20 hover:border-lime-500/30 shadow-sm hover:shadow-md`,
+
+    // Outline button - REMOVED 3D effects
     outline:
-      "border border-charcoal/20 text-forest hover:text-leafy hover:border-leafy font-mono text-xs",
-    ghost:
-      "font-mono text-xs text-leafy p-0 hover:bg-transparent hover:text-leafy",
+      "bg-white text-forest border border-charcoal/10 hover:text-forest hover:border-lime-500/30 shadow-sm hover:shadow-md",
+
+    // Ghost button
+    ghost: "bg-transparent text-forest p-0 hover:bg-transparent hover:text-forest/80 shadow-none",
+
+    // Accent button (same as primary for now) - REMOVED 3D effects
+    accent: `bg-gradient-to-r from-lime-300 to-lime-500 hover:from-lime-400 hover:to-lime-600 text-forest-dark border border-lime-400/20 hover:border-lime-500/30 shadow-sm hover:shadow-md`,
+
+    // Inverse button (dark gradient) - REMOVED 3D effects
+    inverse: `bg-gradient-to-r from-charcoal to-charcoal-dark hover:from-charcoal-dark hover:to-charcoal-darker text-white border border-charcoal-dark/20 hover:border-charcoal-darker/30 shadow-sm hover:shadow-md`,
   },
 
   // Card styles
   card: {
-    DEFAULT: "border border-charcoal/20 shadow-sm",
-    hover: "group hover:border-leafy/50 transition-colors",
+    DEFAULT:
+      "border border-charcoal/5 shadow-elegant-md overflow-hidden transition-all duration-300 backdrop-blur-[2px]",
+    hover: "group hover:border-lime-400/20 hover:shadow-modern-md transition-all duration-300",
+    glass:
+      "backdrop-blur-md bg-white/70 border border-white/20 shadow-elegant-md border-b-charcoal-darker/10 border-r-charcoal-darker/5",
   },
 
-  // Tag styles
+  // Tag styles - Updated for better legibility
   tag: {
-    DEFAULT: `${gradients.tag} ${gradients.tagHover} px-3 py-1 font-mono text-xs text-black shadow-sm`,
+    DEFAULT: `bg-gradient-to-r from-lime-300 to-lime-500 hover:from-lime-400 hover:to-lime-600 px-3 py-1 font-mono text-xs text-charcoal-darker font-medium shadow-elegant-sm transition-all duration-300 border-b-charcoal-darker/10 rounded-full no-underline`,
   },
 
   // Logo styles
   logo: {
     DEFAULT:
-      "inline-block text-3xl font-serif font-medium text-forest uppercase tracking-tight border-2 border-forest px-6 py-2 bg-offwhite transform -skew-x-3 shadow-[4px_4px_0px_0px_rgba(22,101,52,0.8)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all",
+      "inline-block text-3xl font-gothic font-medium text-forest uppercase tracking-tight border-2 border-forest px-6 py-2 bg-offwhite transform -skew-x-3 shadow-elegant-lg hover:shadow-modern-lg hover:translate-x-1 hover:translate-y-1 transition-all duration-300",
   },
 
   // Navigation styles
   nav: {
     link: {
       DEFAULT:
-        "font-mono text-xs tracking-wider text-charcoal hover:text-leafy transition-colors",
-      active: "font-mono text-xs tracking-wider text-leafy font-medium",
+        "font-mono text-xs tracking-wider text-charcoal hover:text-lime-500 transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-lime-500 after:transition-all hover:after:w-full",
+      active:
+        "font-mono text-xs tracking-wider text-lime-500 font-medium relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-lime-500",
     },
+    container: "backdrop-blur-md bg-white/90 sticky top-0 z-50 border-b border-charcoal/5 shadow-elegant-sm",
   },
 
-  // Heading styles
+  // Heading styles - updated to be more modern gothic
   heading: {
-    h1: "font-sans text-4xl md:text-5xl font-light text-black",
-    h2: "font-sans text-2xl font-light text-black",
-    h3: "font-sans text-xl font-light text-black",
+    h1: "font-gothic text-4xl md:text-5xl font-bold text-charcoal-darker uppercase tracking-tight leading-tight border-b border-charcoal-darker/5 pb-2 mb-4 shadow-elegant-sm",
+    h2: "font-gothic text-2xl md:text-3xl font-bold text-charcoal-darker uppercase tracking-tight leading-tight border-b border-charcoal-darker/5 pb-1 mb-3 shadow-elegant-sm",
+    h3: "font-gothic text-xl md:text-2xl font-bold text-charcoal-darker uppercase tracking-tight leading-tight shadow-elegant-sm",
   },
 
   // Text styles
@@ -148,4 +173,4 @@ export const componentStyles = {
     body: "font-mono text-sm text-charcoal/80",
     small: "font-mono text-xs text-charcoal/60",
   },
-};
+}

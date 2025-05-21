@@ -8,12 +8,11 @@ interface StyledCardProps extends HTMLAttributes<HTMLDivElement> {
 
 export const StyledCard = forwardRef<HTMLDivElement, StyledCardProps>(
   ({ className, hover = true, children, ...props }, ref) => {
+    // Define hover styles without the transform
+    const hoverStyles = "transition-shadow duration-300 hover:shadow-modern-md"
+
     return (
-      <div
-        ref={ref}
-        className={cn(componentStyles.card.DEFAULT, hover && componentStyles.card.hover, className)}
-        {...props}
-      >
+      <div ref={ref} className={cn(componentStyles.card.DEFAULT, hover && hoverStyles, className)} {...props}>
         {children}
       </div>
     )
