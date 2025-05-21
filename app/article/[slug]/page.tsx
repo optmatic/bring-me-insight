@@ -1,24 +1,61 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { ArrowLeft, Calendar, ChevronRight, Clock, Share2, User } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
+import { Button } from "@/components/ui/button";
+import {
+  ArrowLeft,
+  Calendar,
+  ChevronRight,
+  Clock,
+  Share2,
+  User,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useRef, useState, use } from "react";
 
-export default function ArticlePage({ params }: { params: { slug: string } }) {
+export default function ArticlePage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const resolvedParams = use(params);
+  const { slug } = resolvedParams;
+
   // State for tracking scroll position and active section
-  const [scrolled, setScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState("")
-  const [scrollProgress, setScrollProgress] = useState(0)
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [headerHeight, setHeaderHeight] = useState(0);
 
-  // Refs for section headings
-  const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({})
+  // Refs for section headings and main header
+  const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({});
+  const mainHeaderRef = useRef<HTMLDivElement>(null);
 
   // Scroll to top on page load
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [params.slug])
+    window.scrollTo(0, 0);
+  }, [slug]);
+
+  // Get the main header height on mount and window resize
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      // Get the main site header height
+      const siteHeader = document.querySelector("header");
+      if (siteHeader) {
+        setHeaderHeight(siteHeader.offsetHeight);
+      }
+    };
+
+    // Initial measurement
+    updateHeaderHeight();
+
+    // Update on resize
+    window.addEventListener("resize", updateHeaderHeight);
+
+    return () => {
+      window.removeEventListener("resize", updateHeaderHeight);
+    };
+  }, []);
 
   // This would normally fetch the article data based on the slug
   // For demo purposes, we're using static content
@@ -67,7 +104,8 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       {
         type: "image",
         url: "/placeholder.svg?key=4gvoa",
-        caption: "Solar farm in regional Victoria, part of Australia's growing renewable energy sector",
+        caption:
+          "Solar farm in regional Victoria, part of Australia's growing renewable energy sector",
       },
       {
         type: "heading",
@@ -110,7 +148,12 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
           "The coming months will be critical in determining whether Australia can reconcile its economic interests with environmental commitments and international expectations. The decisions made now will shape not only the nation's contribution to global climate efforts but also its position in a rapidly evolving global economy.",
       },
     ],
-    tags: ["Climate Policy", "International Relations", "Economic Transition", "Renewable Energy"],
+    tags: [
+      "Climate Policy",
+      "International Relations",
+      "Economic Transition",
+      "Renewable Energy",
+    ],
     relatedArticles: [
       {
         title: "Renewable Energy Projects Accelerate in Rural Communities",
@@ -134,61 +177,64 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
         slug: "reserve-bank-interest-rate-strategy",
       },
     ],
-  }
+  };
 
   // Extract sections for the table of contents
   const sections = article.content
     .filter((block) => block.type === "heading")
     .map((block) => ({
-      id: (block as any).id || block.content.toLowerCase().replace(/\s+/g, "-"),
-      title: block.content,
-    }))
+      id:
+        (block as any).id ||
+        (block.content as string).toLowerCase().replace(/\s+/g, "-"),
+      title: block.content as string,
+    }));
 
   // Handle scroll events to update UI
   useEffect(() => {
     const handleScroll = () => {
       // Show/hide the persistent header
-      setScrolled(window.scrollY > 300)
+      setScrolled(window.scrollY > 100); // Changed from 300 to 100 for earlier trigger
 
       // Calculate scroll progress
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
-      const scrollTop = window.scrollY
-      const progress = (scrollTop / scrollHeight) * 100
-      setScrollProgress(progress)
+      const scrollHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const scrollTop = window.scrollY;
+      const progress = (scrollTop / scrollHeight) * 100;
+      setScrollProgress(progress);
 
       // Update active section based on scroll position
-      const currentPosition = window.scrollY + 100
+      const currentPosition = window.scrollY + 100;
 
       // Find the current section
-      let currentSection = ""
+      let currentSection = "";
       Object.keys(sectionRefs.current).forEach((id) => {
-        const section = sectionRefs.current[id]
+        const section = sectionRefs.current[id];
         if (section && section.offsetTop <= currentPosition) {
-          currentSection = id
+          currentSection = id;
         }
-      })
+      });
 
       if (currentSection !== activeSection) {
-        setActiveSection(currentSection)
+        setActiveSection(currentSection);
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    handleScroll() // Initial call to set initial state
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Initial call to set initial state
 
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [activeSection])
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [activeSection]);
 
   // Scroll to section when clicking on TOC links
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id)
+    const element = document.getElementById(id);
     if (element) {
       window.scrollTo({
         top: element.offsetTop - 80,
         behavior: "smooth",
-      })
+      });
     }
-  }
+  };
 
   // Set article info for the header via context
   useEffect(() => {
@@ -197,18 +243,79 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       title: article.title,
       category: article.category,
       image: article.heroImage,
-    }
+    };
 
     // Dispatch a custom event that the header component can listen for
     const event = new CustomEvent("articleInfoUpdate", {
       detail: articleInfo,
-    })
-    document.dispatchEvent(event)
-  }, [article])
+    });
+    document.dispatchEvent(event);
+  }, [article]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-offwhite via-white to-offwhite flex flex-col">
       <main className="flex-1 relative">
+        {/* Minimized header that appears on scroll - positioned below the main header */}
+        {scrolled && (
+          <div
+            className="sticky bg-white border-b border-charcoal/10 shadow-elegant-sm animate-fadeIn z-40"
+            style={{ top: `${headerHeight - 1}px` }}
+          >
+            <div className="container mx-auto px-4 md:px-6 lg:px-8">
+              <div className="max-w-[1200px] mx-auto flex items-center gap-4 py-4">
+                {/* Article thumbnail */}
+                <div className="relative h-10 w-16 rounded-md overflow-hidden shadow-sm border border-charcoal/10 hidden sm:block">
+                  <Image
+                    src={article.heroImage || "/placeholder.svg"}
+                    alt={article.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* Category tag */}
+                <div className="flex-shrink-0">
+                  <span className="font-mono text-xs text-lime-500 bg-lime-500/10 px-2 py-1 rounded-full border border-lime-500/20">
+                    {article.category}
+                  </span>
+                </div>
+
+                {/* Article title - make it take up remaining space */}
+                <div className="flex-1 overflow-hidden">
+                  <h3 className="font-mono text-sm font-medium text-charcoal-darker truncate">
+                    {article.title}
+                  </h3>
+                  <div className="flex items-center mt-1">
+                    <span className="font-mono text-xs text-charcoal/60 flex items-center mr-3">
+                      <User className="h-3 w-3 mr-1" /> {article.author}
+                    </span>
+                    <span className="font-mono text-xs text-charcoal/60 flex items-center">
+                      <Clock className="h-3 w-3 mr-1" /> {article.readTime}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Reading progress indicator */}
+                <div className="w-24 hidden md:block">
+                  <div className="h-2 w-full bg-charcoal/5 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-lime-300 to-lime-500 transition-all duration-300 rounded-full"
+                      style={{ width: `${scrollProgress}%` }}
+                      role="progressbar"
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      aria-valuenow={Math.round(scrollProgress)}
+                    />
+                  </div>
+                  <p className="font-mono text-xs text-charcoal/60 mt-1 text-right">
+                    {Math.round(scrollProgress)}%
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Decorative geometric elements */}
         <div className="absolute top-0 right-0 w-1/3 h-screen overflow-hidden pointer-events-none opacity-10 z-0">
           <div className="absolute top-20 right-20 w-64 h-64 rounded-full border-4 border-lime-500/30 transform rotate-45"></div>
@@ -229,7 +336,10 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
 
             <div className="mb-6">
               <span className="font-mono text-xs text-lime-500 uppercase tracking-wider inline-block px-3 py-1 bg-gradient-to-r from-forest/10 to-lime-500/10 rounded-full">
-                <Link href={`/category/${article.category.toLowerCase()}`} className="hover:underline">
+                <Link
+                  href={`/category/${article.category.toLowerCase()}`}
+                  className="hover:underline"
+                >
                   {article.category}
                 </Link>
               </span>
@@ -248,20 +358,32 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                   <User className="h-6 w-6" />
                 </div>
                 <div className="ml-3">
-                  <p className="font-sans text-sm font-medium">{article.author}</p>
-                  <p className="font-mono text-xs text-charcoal/60">{article.authorTitle}</p>
+                  <p className="font-sans text-sm font-medium">
+                    {article.author}
+                  </p>
+                  <p className="font-mono text-xs text-charcoal/60">
+                    {article.authorTitle}
+                  </p>
                 </div>
               </div>
               <div className="flex items-center mt-2 sm:mt-0">
                 <div className="flex items-center mr-4 bg-charcoal/5 px-3 py-1 rounded-full border-b border-charcoal-darker/10">
                   <Calendar className="h-4 w-4 text-lime-500 mr-1" />
-                  <span className="font-mono text-xs text-charcoal/60">{article.publishDate}</span>
+                  <span className="font-mono text-xs text-charcoal/60">
+                    {article.publishDate}
+                  </span>
                 </div>
                 <div className="flex items-center bg-charcoal/5 px-3 py-1 rounded-full border-b border-charcoal-darker/10">
                   <Clock className="h-4 w-4 text-lime-500 mr-1" />
-                  <span className="font-mono text-xs text-charcoal/60">{article.readTime}</span>
+                  <span className="font-mono text-xs text-charcoal/60">
+                    {article.readTime}
+                  </span>
                 </div>
-                <Button variant="ghost" size="icon" className="ml-2 text-charcoal/60 hover:text-lime-500">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="ml-2 text-charcoal/60 hover:text-lime-500"
+                >
                   <Share2 className="h-4 w-4" />
                 </Button>
               </div>
@@ -274,7 +396,12 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
         <section className="container mx-auto mb-12 px-4 md:px-6 lg:px-8 relative z-10">
           <div className="max-w-[1200px] mx-auto relative h-[300px] md:h-[500px] lg:h-[600px] rounded-2xl overflow-hidden shadow-xl">
             <div className="absolute inset-0 bg-gradient-to-r from-forest/20 to-lime-500/10 mix-blend-overlay z-10"></div>
-            <Image src={article.heroImage || "/placeholder.svg"} alt={article.title} fill className="object-cover" />
+            <Image
+              src={article.heroImage || "/placeholder.svg"}
+              alt={article.title}
+              fill
+              className="object-cover"
+            />
             <div className="absolute inset-0 bg-gradient-to-br from-transparent to-charcoal-darker/30 mix-blend-overlay"></div>
             <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/30 to-transparent"></div>
           </div>
@@ -289,38 +416,53 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                 switch (block.type) {
                   case "paragraph":
                     return (
-                      <p key={index} className="font-mono text-sm md:text-base text-charcoal/90 leading-relaxed mb-6">
+                      <p
+                        key={index}
+                        className="font-mono text-sm md:text-base text-charcoal/90 leading-relaxed mb-6"
+                      >
                         {block.content}
                       </p>
-                    )
+                    );
                   case "heading":
-                    const headingId = (block as any).id || block.content.toLowerCase().replace(/\s+/g, "-")
+                    const headingId =
+                      (block as any).id ||
+                      (block.content as string)
+                        .toLowerCase()
+                        .replace(/\s+/g, "-");
                     return (
                       <h2
                         key={index}
                         id={headingId}
                         className="gothic-title font-serif text-2xl md:text-3xl font-medium text-charcoal-darker mt-10 mb-6 scroll-mt-32 relative pl-4 border-l-4 border-gradient-to-b from-forest to-lime-500 uppercase tracking-tight transform -skew-x-1"
-                        ref={(el) => (sectionRefs.current[headingId] = el)}
+                        ref={(el) => {
+                          if (el) sectionRefs.current[headingId] = el;
+                        }}
                       >
                         {block.content}
                       </h2>
-                    )
+                    );
                   case "quote":
                     return (
                       <blockquote
                         key={index}
                         className="my-8 p-6 bg-gradient-to-br from-forest/5 to-lime-500/5 backdrop-blur-sm rounded-xl border-l-4 border-lime-500 relative dark-edge"
                       >
-                        <div className="absolute top-2 left-4 text-lime-500/20 text-4xl font-serif">"</div>
+                        <div className="absolute top-2 left-4 text-lime-500/20 text-4xl font-serif">
+                          "
+                        </div>
                         <p className="font-mono text-sm md:text-base text-charcoal/80 italic relative z-10">
                           {block.content}
                         </p>
                         {block.author && (
-                          <cite className="block font-sans text-sm mt-2 not-italic text-forest">— {block.author}</cite>
+                          <cite className="block font-sans text-sm mt-2 not-italic text-forest">
+                            — {block.author}
+                          </cite>
                         )}
-                        <div className="absolute bottom-2 right-4 text-lime-500/20 text-4xl font-serif">"</div>
+                        <div className="absolute bottom-2 right-4 text-lime-500/20 text-4xl font-serif">
+                          "
+                        </div>
                       </blockquote>
-                    )
+                    );
                   case "image":
                     return (
                       <figure key={index} className="my-8">
@@ -340,9 +482,9 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                           </figcaption>
                         )}
                       </figure>
-                    )
+                    );
                   default:
-                    return null
+                    return null;
                 }
               })}
 
@@ -355,7 +497,9 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                   {article.tags.map((tag, index) => (
                     <Link
                       key={index}
-                      href={`/category/${tag.toLowerCase().replace(/\s+/g, "-")}`}
+                      href={`/category/${tag
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
                       className="px-3 py-1 bg-gradient-to-r from-lime-300 to-lime-500 border border-lime-400/20 font-mono text-xs text-forest-dark font-medium hover:from-lime-400 hover:to-lime-600 transition-all duration-300 rounded-full shadow-modern-sm hover:shadow-modern-md transform hover:-translate-y-1 active:translate-y-0"
                     >
                       {tag}
@@ -375,14 +519,18 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                     <h3 className="gothic-title font-serif text-xl font-medium text-charcoal-darker uppercase tracking-tight transform -skew-x-1">
                       {article.author}
                     </h3>
-                    <p className="font-mono text-xs text-charcoal/60 mb-2">{article.authorTitle}</p>
+                    <p className="font-mono text-xs text-charcoal/60 mb-2">
+                      {article.authorTitle}
+                    </p>
                     <p className="font-mono text-sm text-charcoal/80">
-                      Sarah Johnson is a political correspondent with over 15 years of experience covering Australian
-                      and international politics. She specializes in climate policy, international relations, and
-                      economic analysis.
+                      Sarah Johnson is a political correspondent with over 15
+                      years of experience covering Australian and international
+                      politics. She specializes in climate policy, international
+                      relations, and economic analysis.
                     </p>
                     <span className="font-mono text-xs text-lime-500 font-medium mt-2 hover:text-forest transition-all duration-300 hover:translate-x-1 inline-flex items-center cursor-pointer">
-                      VIEW ALL ARTICLES <ChevronRight className="ml-1 h-3 w-3" />
+                      VIEW ALL ARTICLES{" "}
+                      <ChevronRight className="ml-1 h-3 w-3" />
                     </span>
                   </div>
                 </div>
@@ -391,7 +539,10 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
 
             {/* Table of Contents Sidebar */}
             <aside className="lg:w-64 order-2 shrink-0">
-              <div className="lg:sticky lg:top-24 p-6 border border-charcoal/10 shadow-modern-md bg-gradient-to-br from-white to-offwhite/80 backdrop-blur-sm rounded-none">
+              <div
+                className="lg:sticky bg-gradient-to-br from-white to-offwhite/80 backdrop-blur-sm border border-charcoal/10 shadow-modern-md p-6 rounded-none"
+                style={{ top: `${headerHeight + 96}px` }}
+              >
                 <h2 className="gothic-title font-serif text-lg font-medium text-charcoal-darker mb-4 pb-2 border-b border-charcoal/10 relative uppercase tracking-tight transform -skew-x-1">
                   In This Article
                   <div className="absolute bottom-0 left-0 w-1/3 h-px bg-gradient-to-r from-forest to-lime-500"></div>
@@ -407,7 +558,11 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                               ? "text-lime-500 font-medium pl-2 border-l-2 border-lime-500"
                               : "text-charcoal/80 pl-2 border-l-2 border-transparent"
                           }`}
-                          aria-current={activeSection === section.id ? "location" : undefined}
+                          aria-current={
+                            activeSection === section.id
+                              ? "location"
+                              : undefined
+                          }
                         >
                           {section.title}
                         </button>
@@ -420,7 +575,9 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
 
                 <div className="space-y-3">
                   <button
-                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                    onClick={() =>
+                      window.scrollTo({ top: 0, behavior: "smooth" })
+                    }
                     className="font-mono text-xs text-lime-500 hover:text-forest transition-colors w-full text-left flex items-center"
                   >
                     <ArrowLeft className="mr-2 h-3 w-3" /> Back to top
@@ -428,30 +585,6 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                   <button className="font-mono text-xs text-lime-500 hover:text-forest transition-colors w-full text-left flex items-center">
                     <Share2 className="mr-2 h-3 w-3" /> Share article
                   </button>
-                  <Link
-                    href="/"
-                    className="font-mono text-xs text-lime-500 hover:text-forest transition-colors block flex items-center"
-                  >
-                    <ArrowLeft className="mr-2 h-3 w-3" /> Back to home
-                  </Link>
-                </div>
-
-                {/* Reading Progress Indicator */}
-                <div className="mt-6">
-                  <div className="h-2 w-full bg-charcoal/5 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-lime-300 to-lime-500 transition-all duration-300 rounded-full shadow-sm"
-                      style={{ width: `${scrollProgress}%` }}
-                      role="progressbar"
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                      aria-valuenow={Math.round(scrollProgress)}
-                    />
-                  </div>
-                  <p className="font-mono text-xs text-charcoal/60 mt-2 flex justify-between">
-                    <span>Reading progress</span>
-                    <span>{Math.round(scrollProgress)}%</span>
-                  </p>
                 </div>
               </div>
             </aside>
@@ -487,7 +620,9 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                         href={`/category/${related.category.toLowerCase()}`}
                         className="text-forest-dark font-medium hover:text-forest/90"
                       >
-                        <span className="font-mono text-xs">{related.category}</span>
+                        <span className="font-mono text-xs">
+                          {related.category}
+                        </span>
                       </Link>
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
@@ -528,7 +663,8 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                   Stay Informed
                 </h3>
                 <p className="font-mono text-sm text-charcoal/80 mb-6">
-                  Subscribe to our weekly newsletter for in-depth analysis and exclusive content.
+                  Subscribe to our weekly newsletter for in-depth analysis and
+                  exclusive content.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
                   <input
@@ -536,7 +672,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                     placeholder="Your email address"
                     className="px-4 py-2 border border-charcoal/10 font-mono text-xs w-full focus:outline-none focus:ring-2 focus:ring-lime-500 rounded-full shadow-sm dark-edge"
                   />
-                  <Button className="bg-gradient-to-r from-lime-300 to-lime-500 hover:from-lime-400 hover:to-lime-600 text-forest-dark font-mono text-xs font-medium rounded-full shadow-modern-md hover:shadow-modern-lg transition-all duration-300 transform hover:-translate-y-1 active:translate-y-0 border border-lime-400/20">
+                  <Button className="bg-gradient-to-r from-lime-300 to lime-500 hover:from-lime-400 hover:to-lime-600 text-forest-dark font-mono text-xs font-medium rounded-full shadow-modern-md hover:shadow-modern-lg transition-all duration-300 transform hover:-translate-y-1 active:translate-y-0 border border-lime-400/20">
                     SUBSCRIBE
                   </Button>
                 </div>
@@ -546,5 +682,5 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
         </section>
       </main>
     </div>
-  )
+  );
 }

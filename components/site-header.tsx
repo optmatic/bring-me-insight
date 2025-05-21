@@ -1,39 +1,26 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Search, Menu, X } from "lucide-react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useState, useEffect } from "react"
-import { componentStyles } from "@/lib/styles"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Search, Menu, X } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { componentStyles } from "@/lib/styles";
 
 export function SiteHeader() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const pathname = usePathname()
-  const [isScrolled, setIsScrolled] = useState(false)
-
-  // Handle scroll event to change header appearance
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   // Check if a nav link is active
   const isActive = (path: string) => {
-    if (path === "/" && pathname !== "/") return false
-    return pathname === path || pathname.startsWith(`${path}/`)
-  }
+    if (path === "/" && pathname !== "/") return false;
+    return pathname === path || pathname.startsWith(`${path}/`);
+  };
 
   return (
     <header
-      className={`${componentStyles.nav.container} transition-all duration-300 border-b border-charcoal/10 ${
-        isScrolled ? "py-2" : "py-3"
-      }`}
+      className={`${componentStyles.nav.container} bg-white border-b border-charcoal/10 py-3`}
     >
       {/* Main header with logo, tagline, and search */}
       <div className="container mx-auto py-4 px-4 md:px-6 lg:px-8">
@@ -42,12 +29,11 @@ export function SiteHeader() {
             {/* Logo and tagline */}
             <div className="flex items-center">
               <Link href="/">
-                <div className="inline-block text-3xl font-gothic font-bold text-forest uppercase tracking-tight border-2 border-forest px-6 py-2 bg-offwhite transform -skew-x-3 shadow-elegant-lg hover:shadow-modern-lg hover:translate-x-1 hover:translate-y-1 transition-all duration-300">
-                  BRINGMEINSIGHT
+                <div className="font-bokor inline-block text-3xl sm:text-5xl text-black font-normal tracking-wide border-4 border-black px-3 py-2 bg-offwhite transform -skew-x-3 perspective-1000 transform-style-3d shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 transition-all duration-300 hover:bg-gradient-to-r hover:from-lime-300 hover:to-lime-500 hover:text-black">
+                  Bring Me Insight
                 </div>
               </Link>
-              <div className="hidden md:block h-8 w-px bg-charcoal/10 mx-4"></div>
-              <p className="hidden md:block font-mono text-xs text-charcoal/70">
+              <p className="hidden md:block ml-6 font-mono text-xs text-charcoal/70">
                 Australia in Focus. The World in Frame.
               </p>
             </div>
@@ -70,7 +56,11 @@ export function SiteHeader() {
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 aria-label="Toggle menu"
               >
-                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                {isMenuOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
               </button>
             </div>
           </div>
@@ -143,5 +133,5 @@ export function SiteHeader() {
         </div>
       )}
     </header>
-  )
+  );
 }

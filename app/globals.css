@@ -59,6 +59,11 @@
     @apply bg-background text-foreground font-sans;
   }
 
+  /* Font family definitions */
+  .font-bokor {
+    font-family: "Bokor", serif;
+  }
+
   /* Make all buttons rounded by default */
   button,
   .button,
@@ -138,7 +143,12 @@
   left: 0;
   width: 100%;
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(2, 6, 23, 0.1), transparent);
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(2, 6, 23, 0.1),
+    transparent
+  );
 }
 
 /* Dark edge styling */
@@ -180,15 +190,18 @@
 }
 
 .shadow-modern-sm {
-  box-shadow: 0 4px 12px -2px rgba(132, 204, 22, 0.12), 0 0 0 1px rgba(132, 204, 22, 0.05);
+  box-shadow: 0 4px 12px -2px rgba(132, 204, 22, 0.12),
+    0 0 0 1px rgba(132, 204, 22, 0.05);
 }
 
 .shadow-modern-md {
-  box-shadow: 0 8px 20px -4px rgba(132, 204, 22, 0.14), 0 0 0 1px rgba(132, 204, 22, 0.06);
+  box-shadow: 0 8px 20px -4px rgba(132, 204, 22, 0.14),
+    0 0 0 1px rgba(132, 204, 22, 0.06);
 }
 
 .shadow-modern-lg {
-  box-shadow: 0 12px 30px -6px rgba(132, 204, 22, 0.18), 0 0 0 1px rgba(132, 204, 22, 0.08);
+  box-shadow: 0 12px 30px -6px rgba(132, 204, 22, 0.18),
+    0 0 0 1px rgba(132, 204, 22, 0.08);
 }
 
 .shadow-glow {
@@ -250,7 +263,8 @@
 
 .card-hover:hover {
   /* Removed transform: translateY(-5px); */
-  box-shadow: 0 8px 20px -4px rgba(132, 204, 22, 0.14), 0 0 0 1px rgba(132, 204, 22, 0.06);
+  box-shadow: 0 8px 20px -4px rgba(132, 204, 22, 0.14),
+    0 0 0 1px rgba(132, 204, 22, 0.06);
 }
 
 /* Glassmorphism */
@@ -302,7 +316,8 @@
 
 .tag-modern:hover {
   /* Removed transform: translateY(-1px); */
-  box-shadow: 0 4px 12px -2px rgba(132, 204, 22, 0.12), 0 0 0 1px rgba(132, 204, 22, 0.05);
+  box-shadow: 0 4px 12px -2px rgba(132, 204, 22, 0.12),
+    0 0 0 1px rgba(132, 204, 22, 0.05);
 }
 
 /* Accent color utilities */
@@ -361,7 +376,11 @@
 
 /* Modern card with hover effect - MODIFIED to remove transform */
 .card-modern {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.18);
