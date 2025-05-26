@@ -1,224 +1,178 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { ArrowLeft, ChevronRight, Clock } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { useEffect, useState } from "react"
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, ChevronRight, Clock, User } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getPosts } from "@/lib/ghost";
+import { use } from "react";
+import { Calendar } from "lucide-react";
+import type { PostOrPage, PostsOrPages } from "@tryghost/content-api";
 
 // Define types for our data
 type CategoryArticle = {
-  id: string
-  title: string
-  excerpt: string
-  image: string
-  category: string
-  subcategory?: string
-  author: string
-  publishDate: string
-  readTime: string
-  featured?: boolean
-  slug: string
-}
+  id: string;
+  title: string;
+  excerpt: string;
+  image: string;
+  category: string;
+  subcategory?: string;
+  author: string;
+  publishDate: string;
+  readTime: string;
+  featured?: boolean;
+  slug: string;
+};
 
 type CategoryData = {
-  slug: string
-  title: string
-  description: string
-  subcategories: string[]
-  featuredArticle?: CategoryArticle
-  articles: CategoryArticle[]
+  slug: string;
+  title: string;
+  description: string;
+  subcategories: string[];
+  featuredArticle?: CategoryArticle;
+  articles: CategoryArticle[];
+};
+
+interface CategoryPageProps {
+  params: Promise<{ slug: string }>;
 }
 
-export default function CategoryPage({ params }: { params: { slug: string } }) {
-  // State for view mode (grid or list)
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
+export default async function CategoryPage({ params }: CategoryPageProps) {
+  const resolvedParams = use(params);
+  const { slug } = resolvedParams;
 
-  // State for active subcategory filter
-  const [activeFilter, setActiveFilter] = useState<string>("all")
+  let posts: PostsOrPages | null = null;
+  let error: string | null = null;
 
-  // Scroll to top on page load
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [params.slug])
-
-  // This would normally fetch category data based on the slug
-  // For demo purposes, we're using static content
-  const category = {
-    name: params.slug.charAt(0).toUpperCase() + params.slug.slice(1),
-    description:
-      "In-depth coverage of Australian politics, society, and culture, with a focus on the issues that matter most to Australians.",
-    articles: [
-      {
-        title: "Australia's Climate Policy Faces New Challenges in Global Context",
-        excerpt:
-          "As international pressure mounts, Australia navigates complex terrain between economic interests and environmental commitments",
-        category: "POLITICS",
-        image: "/placeholder.svg?key=sit4r",
-        readTime: "10 MIN READ",
-        slug: "australias-climate-policy-faces-new-challenges",
-        date: "May 14, 2025",
-      },
-      {
-        title: "Indigenous Voice Proposal Sparks National Debate on Constitutional Recognition",
-        excerpt:
-          "The proposed Indigenous Voice to Parliament has ignited discussions across political and social spheres",
-        category: "POLITICS",
-        image: "/indigenous-voice-proposal.png",
-        readTime: "8 MIN READ",
-        slug: "indigenous-voice-proposal-sparks-debate",
-        date: "May 12, 2025",
-      },
-      {
-        title: "Electoral Reform Debate Intensifies as Next Federal Election Approaches",
-        excerpt: "Calls for electoral system changes grow louder as parties prepare for the upcoming federal election",
-        category: "POLITICS",
-        image: "/electoral-reform-debate.png",
-        readTime: "7 MIN READ",
-        slug: "electoral-reform-debate-intensifies",
-        date: "May 10, 2025",
-      },
-      {
-        title: "Australian Parliament Debates New National Security Legislation",
-        excerpt: "Proposed laws would expand intelligence agencies' powers while raising privacy concerns",
-        category: "POLITICS",
-        image: "/australian-parliament-debate.png",
-        readTime: "9 MIN READ",
-        slug: "australian-parliament-debates-security-legislation",
-        date: "May 8, 2025",
-      },
-    ],
+  try {
+    posts = await getPosts(1, 10, `tag:${slug}`);
+  } catch (err) {
+    error = "Failed to load posts. Please try again later.";
+    console.error("Error fetching posts:", err);
   }
 
-  // Filter options
-  const filters = ["All", "Latest", "Most Read", "Featured"]
-
-  return (
-    <div className="ds-bg-category">
-      <main className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
-        <div className="max-w-[1200px] mx-auto">
-          <Link
-            href="/"
-            className="inline-flex items-center font-sans text-xs text-lime-500 hover:text-forest mb-6 transition-all duration-300 hover:translate-x-[-4px]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            BACK TO HOME
-          </Link>
-
-          <div className="mb-12">
-            <h1 className="font-heading text-5xl md:text-6xl font-semibold text-charcoal-darker mb-4 tracking-tight">
-              {category.name.toUpperCase()}
-            </h1>
-            <p className="font-sans text-base text-charcoal/80 max-w-3xl">{category.description}</p>
-          </div>
-
-          {/* Filters */}
-          <div className="flex flex-wrap gap-2 mb-8 border-b border-charcoal/10 pb-4">
-            {filters.map((filter, index) => (
-              <button
-                key={index}
-                className={
-                  index === 0
-                    ? "topic-button"
-                    : "font-sans text-xs text-charcoal/60 hover:text-lime-500 transition-all duration-300 px-4 py-2 rounded-full"
-                }
-              >
-                {filter}
-              </button>
-            ))}
-          </div>
-
-          {/* Articles Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {category.articles.map((article, index) => (
-              <div
-                key={index}
-                className="border border-charcoal/10 group hover:border-lime-500/50 transition-all duration-300 shadow-lg rounded-xl overflow-hidden transform hover:translate-y-[-5px] hover:shadow-xl"
-              >
-                <div className="relative h-48">
-                  <Image
-                    src={article.image || "/placeholder.svg"}
-                    alt={article.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent to-charcoal-darker/20 mix-blend-overlay"></div>
-                  <div className="absolute top-0 left-0 bg-gradient-to-r from-lime-300 to-lime-500 px-3 py-1 rounded-br-lg">
-                    <span className="font-sans text-xs text-forest-dark font-medium">{article.category}</span>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                </div>
-                <div className="p-4">
-                  <Link href={`/article/${article.slug}`}>
-                    <h2 className="font-heading text-xl font-semibold text-charcoal-darker group-hover:text-lime-500 transition-colors mb-2">
-                      {article.title}
-                    </h2>
-                  </Link>
-                  <p className="font-sans text-sm text-charcoal/70 mb-4 line-clamp-2">{article.excerpt}</p>
-                  <div className="flex justify-between items-center">
-                    <span className="font-sans text-xs text-charcoal/60 bg-charcoal/5 px-2 py-1 rounded-full border-b border-charcoal-darker/10">
-                      {article.date}
-                    </span>
-                    <span className="font-sans text-xs text-charcoal/60 flex items-center">
-                      <Clock className="h-3 w-3 mr-1" /> {article.readTime}
-                    </span>
-                  </div>
-                  <div className="mt-4 flex justify-end">
-                    <Link href={`/article/${article.slug}`}>
-                      <span className="font-sans text-xs text-lime-500 font-medium hover:text-forest transition-all duration-300 hover:translate-x-1 flex items-center">
-                        READ ARTICLE <ChevronRight className="ml-1 h-3 w-3" />
-                      </span>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Pagination */}
-          <div className="flex justify-center">
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                className="rounded-full font-sans text-xs text-charcoal/60 hover:text-lime-500"
-                disabled
-              >
-                Previous
-              </Button>
-              <Button
-                size="sm"
-                className="rounded-full font-sans text-xs bg-gradient-to-r from-lime-300 to-lime-500 hover:from-lime-400 hover:to-lime-600 text-forest-dark"
-              >
-                1
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="rounded-full font-sans text-xs text-charcoal/60 hover:text-lime-500"
-              >
-                2
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="rounded-full font-sans text-xs text-charcoal/60 hover:text-lime-500"
-              >
-                3
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="rounded-full font-sans text-xs text-charcoal/60 hover:text-lime-500"
-              >
-                Next
-              </Button>
-            </div>
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-gray-900">Error</h2>
+            <p className="mt-4 text-lg text-gray-600">{error}</p>
           </div>
         </div>
-      </main>
+      </div>
+    );
+  }
+
+  if (!posts || !Array.isArray(posts) || posts.length === 0) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-gray-900">No Posts Found</h2>
+            <p className="mt-4 text-lg text-gray-600">
+              No posts found in this category. Please check back later.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <div className="bg-white">
+        <div className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
+              {slug.charAt(0).toUpperCase() + slug.slice(1)}
+            </h1>
+            <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+              Browse all posts in this category
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Posts Grid */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post: PostOrPage) => (
+            <article
+              key={post.id}
+              className="bg-white rounded-lg shadow-lg overflow-hidden"
+            >
+              {post.feature_image && (
+                <div className="relative h-48">
+                  <Image
+                    src={post.feature_image}
+                    alt={post.title || ""}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              )}
+              <div className="p-6">
+                <div className="flex items-center text-sm text-gray-500 mb-2">
+                  {post.primary_author && (
+                    <span className="mr-4">{post.primary_author.name}</span>
+                  )}
+                  <time dateTime={post.published_at || ""}>
+                    {new Date(post.published_at || "").toLocaleDateString()}
+                  </time>
+                </div>
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                  <Link
+                    href={`/article/${post.slug}`}
+                    className="hover:text-blue-600"
+                  >
+                    {post.title}
+                  </Link>
+                </h2>
+                <p className="text-gray-600 line-clamp-3">
+                  {post.excerpt || post.custom_excerpt || ""}
+                </p>
+                <div className="mt-4">
+                  <Link
+                    href={`/article/${post.slug}`}
+                    className="text-blue-600 hover:text-blue-800 font-medium"
+                  >
+                    Read more →
+                  </Link>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* Pagination */}
+        {posts.meta?.pagination && posts.meta.pagination.pages > 1 && (
+          <div className="mt-12 flex justify-center">
+            <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+              {Array.from(
+                { length: posts.meta.pagination.pages },
+                (_, i) => i + 1
+              ).map((page) => (
+                <Link
+                  key={page}
+                  href={`/category/${slug}?page=${page}`}
+                  className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                    page === posts.meta?.pagination?.page
+                      ? "z-10 bg-blue-50 border-blue-500 text-blue-600"
+                      : "bg-white border-gray-300 text-gray-500 hover:bg-gray-50"
+                  }`}
+                >
+                  {page}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        )}
+      </div>
     </div>
-  )
+  );
 }
 
 // Helper function to get category data
@@ -230,27 +184,29 @@ function getCategoryData(slug: string): CategoryData {
   const categoryData: CategoryData = {
     slug: slug,
     title: capitalizeFirstLetter(slug),
-    description: "Comprehensive coverage and analysis of the most important stories.",
+    description:
+      "Comprehensive coverage and analysis of the most important stories.",
     subcategories: [],
     articles: [],
-  }
+  };
 
   // Customize based on slug
   switch (slug) {
     case "australia":
-      categoryData.title = "Australia"
+      categoryData.title = "Australia";
       categoryData.description =
-        "In-depth coverage of Australian politics, society, and culture, with a focus on the issues that matter most to Australians."
+        "In-depth coverage of Australian politics, society, and culture, with a focus on the issues that matter most to Australians.";
       categoryData.subcategories = [
         "Federal Politics",
         "State Politics",
         "Economy",
         "Environment",
         "Indigenous Affairs",
-      ]
+      ];
       categoryData.featuredArticle = {
         id: "aus-1",
-        title: "Australia's Climate Policy Faces New Challenges in Global Context",
+        title:
+          "Australia's Climate Policy Faces New Challenges in Global Context",
         excerpt:
           "As international pressure mounts, Australia navigates complex terrain between economic interests and environmental commitments.",
         image: "/australia-climate-policy.png",
@@ -261,7 +217,7 @@ function getCategoryData(slug: string): CategoryData {
         readTime: "10 min read",
         featured: true,
         slug: "australia-climate-policy-challenges",
-      }
+      };
       categoryData.articles = [
         {
           id: "aus-2",
@@ -305,7 +261,8 @@ function getCategoryData(slug: string): CategoryData {
         {
           id: "aus-5",
           title: "Renewable Energy Projects Accelerate in Rural Communities",
-          excerpt: "Solar and wind initiatives are creating new economic opportunities in regional Australia.",
+          excerpt:
+            "Solar and wind initiatives are creating new economic opportunities in regional Australia.",
           image: "/renewable-energy-rural-australia.png",
           category: "Australia",
           subcategory: "Environment",
@@ -317,7 +274,8 @@ function getCategoryData(slug: string): CategoryData {
         {
           id: "aus-6",
           title: "State Governments Clash Over Water Management Plan",
-          excerpt: "Drought concerns have reignited tensions over the allocation of Murray-Darling Basin resources.",
+          excerpt:
+            "Drought concerns have reignited tensions over the allocation of Murray-Darling Basin resources.",
           image: "/murray-darling-basin.png",
           category: "Australia",
           subcategory: "State Politics",
@@ -329,7 +287,8 @@ function getCategoryData(slug: string): CategoryData {
         {
           id: "aus-7",
           title: "Housing Affordability Crisis Deepens in Major Cities",
-          excerpt: "New data reveals the growing gap between income growth and property prices in metropolitan areas.",
+          excerpt:
+            "New data reveals the growing gap between income growth and property prices in metropolitan areas.",
           image: "/housing-affordability-australia.png",
           category: "Australia",
           subcategory: "Economy",
@@ -341,8 +300,10 @@ function getCategoryData(slug: string): CategoryData {
         {
           id: "aus-8",
           title: "Indigenous Language Preservation Program Launches Nationwide",
-          excerpt: "Federal funding aims to support community-led efforts to document and teach endangered languages.",
-          image: "/placeholder.svg?height=400&width=600&query=indigenous language preservation",
+          excerpt:
+            "Federal funding aims to support community-led efforts to document and teach endangered languages.",
+          image:
+            "/placeholder.svg?height=400&width=600&query=indigenous language preservation",
           category: "Australia",
           subcategory: "Indigenous Affairs",
           author: "Thomas Brown",
@@ -355,7 +316,8 @@ function getCategoryData(slug: string): CategoryData {
           title: "Infrastructure Investment Plan Targets Regional Development",
           excerpt:
             "The ten-year strategy focuses on improving connectivity between rural communities and urban centers.",
-          image: "/placeholder.svg?height=400&width=600&query=regional infrastructure australia",
+          image:
+            "/placeholder.svg?height=400&width=600&query=regional infrastructure australia",
           category: "Australia",
           subcategory: "Federal Politics",
           author: "Olivia Johnson",
@@ -363,19 +325,27 @@ function getCategoryData(slug: string): CategoryData {
           readTime: "9 min read",
           slug: "infrastructure-investment-regional-development",
         },
-      ]
-      break
+      ];
+      break;
 
     case "world":
-      categoryData.title = "World"
+      categoryData.title = "World";
       categoryData.description =
-        "Global news and analysis covering international politics, conflicts, diplomacy, and major world events."
-      categoryData.subcategories = ["Asia-Pacific", "Europe", "Americas", "Middle East", "Africa"]
+        "Global news and analysis covering international politics, conflicts, diplomacy, and major world events.";
+      categoryData.subcategories = [
+        "Asia-Pacific",
+        "Europe",
+        "Americas",
+        "Middle East",
+        "Africa",
+      ];
       categoryData.featuredArticle = {
         id: "world-1",
         title: "Pacific Nations Summit Addresses Regional Security Concerns",
-        excerpt: "Island nations call for stronger international cooperation on climate change and maritime security.",
-        image: "/placeholder.svg?height=400&width=600&query=pacific nations summit",
+        excerpt:
+          "Island nations call for stronger international cooperation on climate change and maritime security.",
+        image:
+          "/placeholder.svg?height=400&width=600&query=pacific nations summit",
         category: "World",
         subcategory: "Asia-Pacific",
         author: "James Wilson",
@@ -383,13 +353,15 @@ function getCategoryData(slug: string): CategoryData {
         readTime: "11 min read",
         featured: true,
         slug: "pacific-nations-summit-security",
-      }
+      };
       categoryData.articles = [
         {
           id: "world-2",
           title: "European Union Unveils New Digital Regulation Framework",
-          excerpt: "The comprehensive legislation aims to address data privacy concerns and platform accountability.",
-          image: "/placeholder.svg?height=400&width=600&query=eu digital regulation",
+          excerpt:
+            "The comprehensive legislation aims to address data privacy concerns and platform accountability.",
+          image:
+            "/placeholder.svg?height=400&width=600&query=eu digital regulation",
           category: "World",
           subcategory: "Europe",
           author: "Anna Schmidt",
@@ -400,8 +372,10 @@ function getCategoryData(slug: string): CategoryData {
         {
           id: "world-3",
           title: "Latin American Trade Alliance Expands Membership",
-          excerpt: "The economic bloc welcomes two new countries as regional integration efforts strengthen.",
-          image: "/placeholder.svg?height=400&width=600&query=latin american trade alliance",
+          excerpt:
+            "The economic bloc welcomes two new countries as regional integration efforts strengthen.",
+          image:
+            "/placeholder.svg?height=400&width=600&query=latin american trade alliance",
           category: "World",
           subcategory: "Americas",
           author: "Carlos Mendez",
@@ -412,8 +386,10 @@ function getCategoryData(slug: string): CategoryData {
         {
           id: "world-4",
           title: "Middle East Peace Talks Resume After Year-Long Hiatus",
-          excerpt: "Diplomatic efforts intensify as international mediators push for breakthrough in negotiations.",
-          image: "/placeholder.svg?height=400&width=600&query=middle east peace talks",
+          excerpt:
+            "Diplomatic efforts intensify as international mediators push for breakthrough in negotiations.",
+          image:
+            "/placeholder.svg?height=400&width=600&query=middle east peace talks",
           category: "World",
           subcategory: "Middle East",
           author: "Fatima Al-Hassan",
@@ -426,7 +402,8 @@ function getCategoryData(slug: string): CategoryData {
           title: "African Union Launches Continental Free Trade Implementation",
           excerpt:
             "The historic agreement begins its operational phase, promising economic transformation across the continent.",
-          image: "/placeholder.svg?height=400&width=600&query=african union free trade",
+          image:
+            "/placeholder.svg?height=400&width=600&query=african union free trade",
           category: "World",
           subcategory: "Africa",
           author: "Kwame Osei",
@@ -437,8 +414,10 @@ function getCategoryData(slug: string): CategoryData {
         {
           id: "world-6",
           title: "Southeast Asian Nations Address South China Sea Tensions",
-          excerpt: "Regional forum calls for adherence to international law amid escalating maritime disputes.",
-          image: "/placeholder.svg?height=400&width=600&query=south china sea tensions",
+          excerpt:
+            "Regional forum calls for adherence to international law amid escalating maritime disputes.",
+          image:
+            "/placeholder.svg?height=400&width=600&query=south china sea tensions",
           category: "World",
           subcategory: "Asia-Pacific",
           author: "Lin Chen",
@@ -446,24 +425,30 @@ function getCategoryData(slug: string): CategoryData {
           readTime: "11 min read",
           slug: "southeast-asia-south-china-sea-tensions",
         },
-      ]
-      break
+      ];
+      break;
 
     case "politics":
-      categoryData.title = "Politics"
+      categoryData.title = "Politics";
       categoryData.description =
-        "Comprehensive coverage of political developments, policy debates, and governance issues in Australia and beyond."
-      categoryData.subcategories = ["Federal", "State", "International Relations", "Policy", "Elections"]
+        "Comprehensive coverage of political developments, policy debates, and governance issues in Australia and beyond.";
+      categoryData.subcategories = [
+        "Federal",
+        "State",
+        "International Relations",
+        "Policy",
+        "Elections",
+      ];
       // Add similar data structure as above
-      break
+      break;
 
     default:
     // Keep default values for other categories
   }
 
-  return categoryData
+  return categoryData;
 }
 
 function capitalizeFirstLetter(string: string): string {
-  return string.charAt(0).toUpperCase() + string.slice(1)
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
