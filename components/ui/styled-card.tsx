@@ -1,5 +1,4 @@
-import { componentStyles } from "@/lib/styles"
-import { cn } from "@/lib/utils"
+import { DSCard } from "@/components/design-system"
 import { type HTMLAttributes, forwardRef } from "react"
 
 interface StyledCardProps extends HTMLAttributes<HTMLDivElement> {
@@ -8,13 +7,10 @@ interface StyledCardProps extends HTMLAttributes<HTMLDivElement> {
 
 export const StyledCard = forwardRef<HTMLDivElement, StyledCardProps>(
   ({ className, hover = true, children, ...props }, ref) => {
-    // Define hover styles without the transform
-    const hoverStyles = "transition-shadow duration-300 hover:shadow-modern-md"
-
     return (
-      <div ref={ref} className={cn(componentStyles.card.DEFAULT, hover && hoverStyles, className)} {...props}>
+      <DSCard ref={ref} hover={hover} className={className} {...props}>
         {children}
-      </div>
+      </DSCard>
     )
   },
 )

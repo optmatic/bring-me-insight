@@ -26,10 +26,10 @@
   --color-info: 59, 130, 246;
 
   /* Typography */
-  --font-sans: "Inter", sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
-  --font-serif: "Cinzel", serif;
-  --font-gothic: "Bokor", system-ui,
+  --font-heading: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-gothic: "Bokor", serif;
 
   /* Border radius */
   --radius-sm: 0.125rem;
@@ -41,12 +41,9 @@
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.02);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.02);
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.02);
-  --shadow-modern-sm: 0 4px 12px -2px rgba(132, 204, 22, 0.15),
-    0 0 0 1px rgba(132, 204, 22, 0.08);
-  --shadow-modern-md: 0 8px 20px -4px rgba(132, 204, 22, 0.2),
-    0 0 0 1px rgba(132, 204, 22, 0.1);
-  --shadow-modern-lg: 0 12px 30px -6px rgba(132, 204, 22, 0.25),
-    0 0 0 1px rgba(132, 204, 22, 0.12);
+  --shadow-modern-sm: 0 4px 12px -2px rgba(132, 204, 22, 0.15), 0 0 0 1px rgba(132, 204, 22, 0.08);
+  --shadow-modern-md: 0 8px 20px -4px rgba(132, 204, 22, 0.2), 0 0 0 1px rgba(132, 204, 22, 0.1);
+  --shadow-modern-lg: 0 12px 30px -6px rgba(132, 204, 22, 0.25), 0 0 0 1px rgba(132, 204, 22, 0.12);
   --shadow-glow: 0 0 15px rgba(132, 204, 22, 0.4);
 
   /* Button 3D shadows */

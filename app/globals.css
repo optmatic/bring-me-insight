@@ -5,49 +5,66 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
+    --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
+
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
+
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 132 204 22; /* Lime green as primary */
-    --primary-foreground: 22 101 52; /* Forest green for text on lime */
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
+
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 132 204 22; /* Lime green as accent */
-    --accent-foreground: 22 101 52; /* Forest green for text on accent */
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
+
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 132 204 22; /* Lime green for focus rings */
-    --radius: 0.25rem; /* Slight radius for modern look */
-    --radius-full: 9999px; /* Full radius for buttons */
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+    --radius-full: 9999px;
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
+
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
+
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 132 204 22; /* Lime green as primary */
-    --primary-foreground: 22 101 52; /* Forest green for text on lime */
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
+
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-    --accent: 132 204 22; /* Lime green as accent */
-    --accent-foreground: 22 101 52; /* Forest green for text on accent */
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
+
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 132 204 22; /* Lime green for focus rings */
+    --ring: 212.7 26.8% 83.9%;
   }
 }
 
@@ -55,171 +72,571 @@
   * {
     @apply border-border;
   }
+
+  /* Ensure full viewport coverage for html and body */
+  html {
+    height: auto; /* Changed from 100% to auto */
+    width: 100%;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-y: auto; /* Ensure vertical scroll works */
+  }
+
+  /* Base body font - Inter for all body text */
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-y: auto; /* Ensure vertical scroll works */
   }
 
-  /* Font family definitions */
-  .font-bokor {
-    font-family: "Bokor", serif;
-  }
-
-  /* Make all buttons rounded by default */
-  button,
-  .button,
-  [type="button"],
-  [type="submit"],
-  [type="reset"] {
-    @apply rounded-full;
-  }
-
-  /* Remove underlines from links */
-  a {
-    @apply no-underline;
-  }
-
-  /* Consistent heading styles */
+  /* Display fonts - Gothic A1 for all headings and display text */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    @apply font-gothic;
+    font-family: "Gothic A1", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
   }
 
-  /* Consistent body text */
+  /* Body text elements - Inter */
   p,
   span,
-  div {
-    @apply font-sans;
+  div,
+  a,
+  button,
+  label,
+  input,
+  textarea,
+  select {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
-  /* Consistent code/monospace text */
+  /* Navigation and menu items - Inter */
+  nav,
+  nav a,
+  nav button,
+  nav span {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  /* Form elements - Inter */
+  input,
+  textarea,
+  select,
+  option,
+  label {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  /* Button text - Inter */
+  button,
+  .btn,
+  [role="button"] {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  /* Links - Inter */
+  a,
+  a span {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  /* Code/monospace text */
   code,
   pre,
   kbd {
-    @apply font-mono;
+    font-family: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+  }
+
+  /* Remove underlines from links */
+  a {
+    @apply no-underline;
   }
 }
 
-/* Custom Gothic Divider */
-.gothic-divider {
-  position: relative;
-  height: 1px;
-  background-color: rgba(var(--color-charcoal), 0.1);
+/* =============================================================================
+   DESIGN SYSTEM UTILITY CLASSES
+   ============================================================================= */
+
+/* Typography Classes */
+.ds-display-h1 {
+  font-family: "Gothic A1", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-4xl md:text-5xl font-semibold text-charcoal-950 tracking-tight leading-tight;
+}
+.ds-display-h2 {
+  font-family: "Gothic A1", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-2xl md:text-3xl font-medium text-charcoal-950 tracking-tight leading-tight;
+}
+.ds-display-h3 {
+  font-family: "Gothic A1", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-xl md:text-2xl font-medium text-charcoal-950 tracking-tight leading-tight;
+}
+.ds-display-h4 {
+  font-family: "Gothic A1", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-lg font-medium text-charcoal-950;
 }
 
-.gothic-divider::before,
-.gothic-divider::after {
+.ds-body-large {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-lg text-charcoal-800/90 leading-relaxed;
+}
+.ds-body-base {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-base text-charcoal-800/90 leading-relaxed;
+}
+.ds-body-small {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-sm text-charcoal-700/70 leading-normal;
+}
+.ds-body-xs {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-xs text-charcoal-600/60 leading-normal;
+}
+
+.ds-logo {
+  font-family: "Bokor", serif;
+  @apply text-3xl font-normal tracking-wide;
+}
+.ds-category {
+  font-family: "Gothic A1", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-5xl md:text-6xl font-bold text-charcoal-950 tracking-tight uppercase;
+}
+.ds-mono {
+  font-family: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+  @apply text-sm text-charcoal-800/80;
+}
+
+/* Button Classes - Completely clean implementation */
+.ds-btn-primary {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(to right, #bef264, #a3e635);
+  color: #166534;
+  border: none; /* Completely remove border */
+  box-shadow: none; /* Remove all shadows */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.ds-btn-primary:hover {
+  background: linear-gradient(to right, #a3e635, #84cc16);
+  transform: translateY(-1px);
+}
+
+.ds-btn-primary:active {
+  transform: translateY(0);
+}
+
+.ds-btn-secondary {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.5rem 1rem;
+  background-color: #ffffff;
+  color: #166534;
+  border: 1px solid rgba(226, 232, 240, 0.3);
+  box-shadow: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.ds-btn-secondary:hover {
+  border-color: rgba(132, 204, 22, 0.4);
+  background-color: #f8fafc;
+}
+
+.ds-btn-ghost {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  color: #166534;
+  border: none;
+  box-shadow: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.ds-btn-ghost:hover {
+  color: rgba(22, 101, 52, 0.8);
+  background-color: rgba(190, 242, 100, 0.1);
+}
+
+.ds-btn-topic {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  padding: 0.25rem 0.75rem;
+  background-color: #ecfccb;
+  color: #166534;
+  border: none;
+  box-shadow: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.ds-btn-topic:hover {
+  background-color: #d9f99d;
+}
+
+/* Card Classes */
+.ds-card {
+  @apply border border-charcoal-200/10 shadow-elegant-md overflow-hidden transition-all duration-300 backdrop-blur-[2px];
+}
+
+.ds-card-hover {
+  @apply hover:border-lime-400/20 hover:shadow-modern-md transition-all duration-300;
+}
+
+/* Navigation Classes - Fixed to prevent shifting */
+.ds-nav-header {
+  @apply backdrop-blur-md bg-white/90 sticky top-0 z-50 border-b border-charcoal-200/5 shadow-elegant-sm;
+}
+
+.ds-nav-link {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-sm tracking-wide text-charcoal-800 hover:text-lime-500 transition-colors relative;
+  position: relative;
+}
+
+.ds-nav-link::after {
   content: "";
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: rgb(var(--color-leafy));
-  transform: rotate(45deg);
-  top: -4.5px;
-}
-
-.gothic-divider::before {
-  left: 0;
-}
-
-.gothic-divider::after {
-  right: 0;
-}
-
-/* Modern Gothic title styling */
-.gothic-title {
-  @apply font-gothic uppercase tracking-tight leading-tight;
-  letter-spacing: 0.02em;
-  position: relative;
-}
-
-.gothic-title::after {
-  content: "";
-  position: absolute;
-  bottom: -0.25rem;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(2, 6, 23, 0.1),
-    transparent
-  );
-}
-
-/* Dark edge styling */
-.dark-edge {
-  position: relative;
-}
-
-.dark-edge::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
   height: 2px;
-  background: linear-gradient(to bottom, transparent, rgba(2, 6, 23, 0.05));
+  background-color: rgb(132, 204, 22); /* lime-500 */
+  transition: width 0.3s ease;
 }
 
-.dark-edge-right::after {
+.ds-nav-link:hover::after {
+  width: 100%;
+}
+
+.ds-nav-link-active {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-sm tracking-wide text-lime-500 font-medium relative;
+  position: relative;
+}
+
+.ds-nav-link-active::after {
   content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 2px;
-  background: linear-gradient(to right, transparent, rgba(2, 6, 23, 0.05));
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 2px;
+  background-color: rgb(132, 204, 22); /* lime-500 */
 }
 
-/* Modern Shadow Effects */
+/* Layout Classes */
+.ds-footer {
+  @apply bg-gradient-to-br from-forest-600 to-forest-800 text-white py-12;
+}
+
+.ds-footer-brand {
+  font-family: "Gothic A1", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-2xl font-bold mb-4 inline-block bg-white/10 backdrop-blur-sm px-4 py-2 shadow-elegant-md;
+}
+
+.ds-footer-description {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-xs text-white/70 max-w-md mb-6;
+}
+
+.ds-footer-section-title {
+  font-family: "Gothic A1", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-sm font-bold uppercase tracking-wider mb-4 pb-2 border-b border-white/20;
+}
+
+.ds-footer-link {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-xs text-white/70 hover:text-lime-300 transition-colors flex items-center;
+}
+
+.ds-footer-link-icon {
+  @apply mr-2 text-lime-300;
+}
+
+.ds-footer-social-link {
+  @apply text-lime-300 hover:text-white transition-colors;
+}
+
+.ds-footer-copyright {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-xs text-white/50;
+}
+
+.ds-footer-separator {
+  @apply my-8 bg-lime-500/20;
+}
+
+/* Newsletter Classes */
+.ds-newsletter {
+  @apply border border-charcoal-200/10 p-8 bg-gradient-to-br from-forest-50/50 to-lime-50/50 backdrop-blur-sm rounded-xl shadow-elegant-lg relative overflow-hidden;
+}
+
+.ds-newsletter-title {
+  font-family: "Gothic A1", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-2xl md:text-3xl font-medium text-charcoal-950 mb-2 text-center;
+}
+
+.ds-newsletter-description {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-base text-charcoal-800/80 mb-6 text-center max-w-2xl mx-auto;
+}
+
+.ds-newsletter-form {
+  @apply flex flex-col sm:flex-row gap-2 max-w-md mx-auto;
+}
+
+.ds-newsletter-input {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply px-4 py-2 border border-charcoal-200/10 text-sm w-full focus:outline-none focus:ring-2 focus:ring-lime-500 rounded-full shadow-sm placeholder:text-charcoal-400/60;
+}
+
+.ds-newsletter-button {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.5rem 1.5rem;
+  background: linear-gradient(to right, #bef264, #a3e635);
+  color: #166534;
+  border: none; /* Remove border completely */
+  box-shadow: none; /* Remove all shadows */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0);
+}
+
+.ds-newsletter-button:hover {
+  background: linear-gradient(to right, #a3e635, #84cc16);
+  transform: translateY(-2px);
+}
+
+.ds-newsletter-button:active {
+  transform: translateY(0);
+}
+
+.ds-newsletter-decorative {
+  @apply absolute rounded-full border-4 opacity-20;
+}
+
+/* Search Input - Clean styling */
+.ds-search-input {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1px solid rgba(226, 232, 240, 0.2);
+  border-radius: 9999px;
+  background-color: #ffffff;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #1e293b;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.ds-search-input:focus {
+  border-color: #84cc16;
+  box-shadow: 0 0 0 3px rgba(132, 204, 22, 0.1);
+}
+
+.ds-search-input::placeholder {
+  color: rgba(100, 116, 139, 0.6);
+  font-weight: 400;
+}
+
+/* Form Classes */
+.ds-input {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply px-4 py-2 border border-charcoal-200/10 text-sm w-full focus:outline-none focus:ring-2 focus:ring-lime-500 rounded-full shadow-sm;
+}
+
+.ds-label {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  @apply text-sm font-medium text-charcoal-950;
+}
+
+/* Background Utility Classes - Updated for proper scrolling */
+.ds-bg-page {
+  background-color: #ffffff;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.ds-bg-page-gradient {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
+  min-height: 100vh;
+  width: 100%;
+  /* Removed position: fixed which was causing scroll issues */
+}
+
+.ds-bg-article {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+.ds-bg-category {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+.ds-bg-section-accent {
+  background: linear-gradient(135deg, rgba(240, 253, 244, 0.5), rgba(236, 252, 203, 0.5));
+  backdrop-filter: blur(4px);
+}
+
+.ds-bg-hero {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
+}
+
+.ds-bg-card {
+  background-color: #ffffff;
+}
+
+.ds-bg-overlay {
+  background-color: rgba(15, 23, 42, 0.8);
+}
+
+/* Page-specific background classes - Updated for full coverage */
+.page-background {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+.article-background {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+.category-background {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+/* Legacy classes for backward compatibility */
+.topic-button {
+  @apply ds-btn-topic;
+}
+.gradient-button {
+  @apply ds-btn-primary;
+}
+
+/* Shadow utilities */
 .shadow-elegant-sm {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.02);
 }
-
 .shadow-elegant-md {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.02);
 }
-
 .shadow-elegant-lg {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.02);
 }
 
 .shadow-modern-sm {
-  box-shadow: 0 4px 12px -2px rgba(132, 204, 22, 0.12),
-    0 0 0 1px rgba(132, 204, 22, 0.05);
+  box-shadow: 0 4px 12px -2px rgba(132, 204, 22, 0.15), 0 0 0 1px rgba(132, 204, 22, 0.08);
 }
-
 .shadow-modern-md {
-  box-shadow: 0 8px 20px -4px rgba(132, 204, 22, 0.14),
-    0 0 0 1px rgba(132, 204, 22, 0.06);
+  box-shadow: 0 8px 20px -4px rgba(132, 204, 22, 0.2), 0 0 0 1px rgba(132, 204, 22, 0.1);
 }
-
 .shadow-modern-lg {
-  box-shadow: 0 12px 30px -6px rgba(132, 204, 22, 0.18),
-    0 0 0 1px rgba(132, 204, 22, 0.08);
+  box-shadow: 0 12px 30px -6px rgba(132, 204, 22, 0.25), 0 0 0 1px rgba(132, 204, 22, 0.12);
 }
-
 .shadow-glow {
   box-shadow: 0 0 15px rgba(132, 204, 22, 0.4);
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
+/* Hide scrollbar utilities */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
-
-/* Hide scrollbar for IE, Edge and Firefox */
 .scrollbar-hide {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-/* Animation for article header */
+/* Animation utilities */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -235,164 +652,7 @@
   animation: fadeIn 0.3s ease-out forwards;
 }
 
-/* Hover animations */
-@keyframes pulse-subtle {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.8;
-  }
-}
-
-.hover-pulse:hover {
-  animation: pulse-subtle 2s ease-in-out infinite;
-}
-
-/* Gradient text */
-.gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-lime-500 to-lime-300;
-}
-
-/* Card hover effects - MODIFIED to remove transform */
-.card-hover {
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.02);
-}
-
-.card-hover:hover {
-  /* Removed transform: translateY(-5px); */
-  box-shadow: 0 8px 20px -4px rgba(132, 204, 22, 0.14),
-    0 0 0 1px rgba(132, 204, 22, 0.06);
-}
-
-/* Glassmorphism */
-.glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid rgba(2, 6, 23, 0.05);
-  border-right: 1px solid rgba(2, 6, 23, 0.02);
-}
-
-.dark .glass {
-  background: rgba(30, 41, 59, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  border-right: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-/* 2D Button Style - UPDATED to match the flat 2D style */
-.btn-2d {
-  background: linear-gradient(to right, #a3e635, #84cc16);
-  color: #166534;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.75rem;
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  border: 1px solid rgba(132, 204, 22, 0.2);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
-
-.btn-2d:hover {
-  background: linear-gradient(to right, #bef264, #a3e635);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Tag styles with modern effect */
-.tag-modern {
-  border: 1px solid rgba(132, 204, 22, 0.2);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.02);
-  transition: all 0.2s ease;
-  overflow: hidden;
-  text-decoration: none;
-}
-
-.tag-modern:hover {
-  /* Removed transform: translateY(-1px); */
-  box-shadow: 0 4px 12px -2px rgba(132, 204, 22, 0.12),
-    0 0 0 1px rgba(132, 204, 22, 0.05);
-}
-
-/* Accent color utilities */
-.accent-border {
-  @apply border-lime-500;
-}
-
-.accent-text {
-  @apply text-lime-500;
-}
-
-.accent-bg {
-  @apply bg-lime-500;
-}
-
-.accent-gradient {
-  @apply bg-gradient-to-r from-lime-300 to-lime-500;
-}
-
-.accent-hover:hover {
-  @apply text-lime-500;
-}
-
-/* Gothic text utilities */
-.gothic-text {
-  @apply font-gothic uppercase tracking-tight;
-  letter-spacing: 0.02em;
-}
-
-/* Dark edge utilities */
-.dark-edge-bottom {
-  border-bottom: 1px solid rgba(2, 6, 23, 0.05);
-}
-
-.dark-edge-right {
-  border-right: 1px solid rgba(2, 6, 23, 0.05);
-}
-
-.dark-shadow {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.02);
-}
-
-/* Modern futuristic utilities */
-.glow-hover {
-  transition: all 0.3s ease;
-}
-
-.glow-hover:hover {
-  box-shadow: 0 0 15px rgba(132, 204, 22, 0.4);
-}
-
-.backdrop-blur-modern {
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-/* Modern card with hover effect - MODIFIED to remove transform */
-.card-modern {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.1),
-    rgba(255, 255, 255, 0.05)
-  );
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-}
-
-.card-modern:hover {
-  box-shadow: 0 8px 32px 0 rgba(132, 204, 22, 0.2);
-  border: 1px solid rgba(132, 204, 22, 0.18);
-  /* Removed transform: translateY(-5px); */
-}
-
 /* Import fonts */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&family=Bebas+Neue&family=Oswald:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;600;700;800&display=swap");

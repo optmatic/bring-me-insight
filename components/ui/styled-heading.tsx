@@ -1,26 +1,27 @@
-import { componentStyles } from "@/lib/styles"
+import { DSHeading } from "@/components/design-system"
 import { cn } from "@/lib/utils"
-import { type HTMLAttributes, forwardRef } from "react"
+import type React from "react"
 
-interface StyledHeadingProps extends HTMLAttributes<HTMLHeadingElement> {
-  level: 1 | 2 | 3 | 4 | 5 | 6
+interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
+  level?: 1 | 2 | 3 | 4 | 5 | 6
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
+  variant?: "default" | "category"
+  children: React.ReactNode
 }
 
-export const StyledHeading = forwardRef<HTMLHeadingElement, StyledHeadingProps>(
-  ({ className, level = 1, children, ...props }, ref) => {
-    const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements
-
-    let headingStyle = ""
-    if (level === 1) headingStyle = componentStyles.heading.h1
-    else if (level === 2) headingStyle = componentStyles.heading.h2
-    else if (level === 3) headingStyle = componentStyles.heading.h3
-
+export function StyledHeading({ level = 1, as, variant = "default", className, children, ...props }: HeadingProps) {
+  if (variant === "category") {
+    const Tag = as || (`h${level}` as "h1" | "h2" | "h3" | "h4" | "h5" | "h6")
     return (
-      <HeadingTag ref={ref as any} className={cn(headingStyle, className)} {...props}>
+      <Tag className={cn("ds-category", className)} {...props}>
         {children}
-      </HeadingTag>
+      </Tag>
     )
-  },
-)
+  }
 
-StyledHeading.displayName = "StyledHeading"
+  return (
+    <DSHeading level={level} className={className} {...props}>
+      {children}
+    </DSHeading>
+  )
+}

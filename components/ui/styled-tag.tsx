@@ -1,4 +1,3 @@
-import { componentStyles } from "@/lib/styles"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { type AnchorHTMLAttributes, forwardRef } from "react"
@@ -20,7 +19,7 @@ export const StyledTag = forwardRef<HTMLAnchorElement, StyledTagProps>(
         ref={ref}
         href={href}
         className={cn(
-          componentStyles.tag.DEFAULT,
+          "bg-lime-100 text-green-700 rounded-full px-3 py-1.5 font-semibold text-sm inline-flex items-center hover:bg-lime-200 focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-2 transition-colors",
           elevated && elevationStyles,
           "no-underline", // Remove underlines
           className,

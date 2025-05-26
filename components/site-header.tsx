@@ -1,26 +1,35 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search, Menu, X } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { componentStyles } from "@/lib/styles";
+"use client"
+import { Search, Menu, X } from "lucide-react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useState, useEffect } from "react"
 
 export function SiteHeader() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const pathname = usePathname()
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  // Handle scroll event to change header appearance
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   // Check if a nav link is active
   const isActive = (path: string) => {
-    if (path === "/" && pathname !== "/") return false;
-    return pathname === path || pathname.startsWith(`${path}/`);
-  };
+    if (path === "/" && pathname !== "/") return false
+    return pathname === path || pathname.startsWith(`${path}/`)
+  }
 
   return (
     <header
-      className={`${componentStyles.nav.container} bg-white border-b border-charcoal/10 py-3`}
+      className={`ds-nav-header transition-all duration-300 border-b border-charcoal/10 ${
+        isScrolled ? "py-2" : "py-3"
+      }`}
     >
       {/* Main header with logo, tagline, and search */}
       <div className="container mx-auto py-4 px-4 md:px-6 lg:px-8">
@@ -33,34 +42,23 @@ export function SiteHeader() {
                   Bring Me Insight
                 </div>
               </Link>
-              <p className="hidden md:block ml-6 font-mono text-xs text-charcoal/70">
-                Australia in Focus. The World in Frame.
-              </p>
+              <div className="hidden md:block h-8 w-px bg-charcoal/10 mx-4"></div>
+              <p className="hidden md:block ds-body-xs text-charcoal/70">Australia in Focus. The World in Frame.</p>
             </div>
 
             {/* Search and subscribe */}
             <div className="flex items-center gap-3 w-full md:w-auto">
               <div className="relative flex-1 md:w-64">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-charcoal/50" />
-                <Input
-                  type="search"
-                  placeholder="Search articles..."
-                  className="pl-10 font-mono text-xs border-charcoal/10 focus-visible:ring-lime-500 rounded-full"
-                />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-charcoal/50 z-10" />
+                <input type="search" placeholder="Search articles..." className="ds-search-input" />
               </div>
-              <Button className="hidden md:flex bg-gradient-to-r from-lime-300 to-lime-500 hover:from-lime-400 hover:to-lime-600 text-forest-dark font-medium font-mono text-xs shadow-sm border border-lime-400/20 hover:shadow-md rounded-full">
-                Subscribe
-              </Button>
+              <button className="hidden md:flex ds-btn-primary">Subscribe</button>
               <button
                 className="md:hidden p-2 text-charcoal hover:text-forest"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 aria-label="Toggle menu"
               >
-                {isMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
+                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
             </div>
           </div>
@@ -79,14 +77,10 @@ export function SiteHeader() {
               { name: "MEDIA", path: "/media" },
               { name: "DISCOVER", path: "/discover" },
             ].map((item) => (
-              <li key={item.name}>
+              <li key={item.name} className="relative">
                 <Link
                   href={item.path}
-                  className={
-                    isActive(item.path)
-                      ? "bg-gradient-to-r from-lime-300 to-lime-500 text-forest-dark font-medium px-3 py-1 rounded-full font-mono text-xs"
-                      : "font-mono text-xs text-charcoal hover:text-lime-500 transition-colors"
-                  }
+                  className={`block px-2 py-1 text-center min-w-[80px] ${isActive(item.path) ? "ds-nav-link-active" : "ds-nav-link"}`}
                 >
                   {item.name}
                 </Link>
@@ -112,11 +106,7 @@ export function SiteHeader() {
                 <li key={item.name}>
                   <Link
                     href={item.path}
-                    className={
-                      isActive(item.path)
-                        ? "bg-gradient-to-r from-lime-300 to-lime-500 text-forest-dark font-medium px-3 py-1 rounded-full font-mono text-xs"
-                        : "font-mono text-xs text-charcoal hover:text-lime-500 transition-colors"
-                    }
+                    className={`block px-2 py-1 ${isActive(item.path) ? "ds-nav-link-active" : "ds-nav-link"}`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
@@ -124,14 +114,12 @@ export function SiteHeader() {
                 </li>
               ))}
               <li className="pt-2 border-t border-charcoal/10">
-                <Button className="font-mono text-xs bg-gradient-to-r from-lime-300 to-lime-500 hover:from-lime-400 hover:to-lime-600 text-forest-dark font-medium shadow-sm border border-lime-400/20 hover:shadow-md rounded-full w-full">
-                  Subscribe
-                </Button>
+                <button className="ds-btn-primary w-full">Subscribe</button>
               </li>
             </ul>
           </div>
         </div>
       )}
     </header>
-  );
+  )
 }

@@ -1,8 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ChevronRight, Grid3X3, List, Search, SlidersHorizontal } from "lucide-react"
+import { ArrowLeft, ChevronRight, Clock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -43,288 +42,180 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
     window.scrollTo(0, 0)
   }, [params.slug])
 
-  // This would normally fetch the category data based on the slug
+  // This would normally fetch category data based on the slug
   // For demo purposes, we're using static content
-  const categoryData: CategoryData = getCategoryData(params.slug)
+  const category = {
+    name: params.slug.charAt(0).toUpperCase() + params.slug.slice(1),
+    description:
+      "In-depth coverage of Australian politics, society, and culture, with a focus on the issues that matter most to Australians.",
+    articles: [
+      {
+        title: "Australia's Climate Policy Faces New Challenges in Global Context",
+        excerpt:
+          "As international pressure mounts, Australia navigates complex terrain between economic interests and environmental commitments",
+        category: "POLITICS",
+        image: "/placeholder.svg?key=sit4r",
+        readTime: "10 MIN READ",
+        slug: "australias-climate-policy-faces-new-challenges",
+        date: "May 14, 2025",
+      },
+      {
+        title: "Indigenous Voice Proposal Sparks National Debate on Constitutional Recognition",
+        excerpt:
+          "The proposed Indigenous Voice to Parliament has ignited discussions across political and social spheres",
+        category: "POLITICS",
+        image: "/indigenous-voice-proposal.png",
+        readTime: "8 MIN READ",
+        slug: "indigenous-voice-proposal-sparks-debate",
+        date: "May 12, 2025",
+      },
+      {
+        title: "Electoral Reform Debate Intensifies as Next Federal Election Approaches",
+        excerpt: "Calls for electoral system changes grow louder as parties prepare for the upcoming federal election",
+        category: "POLITICS",
+        image: "/electoral-reform-debate.png",
+        readTime: "7 MIN READ",
+        slug: "electoral-reform-debate-intensifies",
+        date: "May 10, 2025",
+      },
+      {
+        title: "Australian Parliament Debates New National Security Legislation",
+        excerpt: "Proposed laws would expand intelligence agencies' powers while raising privacy concerns",
+        category: "POLITICS",
+        image: "/australian-parliament-debate.png",
+        readTime: "9 MIN READ",
+        slug: "australian-parliament-debates-security-legislation",
+        date: "May 8, 2025",
+      },
+    ],
+  }
 
-  // Filter articles based on active filter
-  const filteredArticles =
-    activeFilter === "all"
-      ? categoryData.articles
-      : categoryData.articles.filter((article) => article.subcategory === activeFilter)
+  // Filter options
+  const filters = ["All", "Latest", "Most Read", "Featured"]
 
   return (
-    <div className="min-h-screen bg-offwhite flex flex-col">
-      <main className="flex-1">
-        {/* Category Header */}
-        <section className="bg-forest/5 border-b border-charcoal/10">
-          <div className="container mx-auto py-12 px-4 md:px-6 lg:px-8">
-            <div className="max-w-[1200px] mx-auto">
-              <div className="max-w-2xl">
-                <h1 className="font-gothic text-4xl md:text-5xl font-bold text-charcoal-darker mb-4 uppercase tracking-tight">
-                  {categoryData.title}
-                </h1>
-                <p className="font-mono text-sm text-charcoal/80">{categoryData.description}</p>
-              </div>
-            </div>
-          </div>
-        </section>
+    <div className="ds-bg-category">
+      <main className="container mx-auto px-4 md:px-6 lg:px-8 py-8">
+        <div className="max-w-[1200px] mx-auto">
+          <Link
+            href="/"
+            className="inline-flex items-center font-sans text-xs text-lime-500 hover:text-forest mb-6 transition-all duration-300 hover:translate-x-[-4px]"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            BACK TO HOME
+          </Link>
 
-        {/* Featured Article */}
-        {categoryData.featuredArticle && (
-          <section className="container mx-auto mt-8 px-4 md:px-6 lg:px-8">
-            <div className="max-w-[1200px] mx-auto">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 border border-charcoal/20 p-4 md:p-8 shadow-elegant-md">
-                <div className="lg:col-span-7 flex flex-col justify-center">
-                  <span className="font-mono text-xs text-lime-500 uppercase tracking-wider mb-2">FEATURED STORY</span>
-                  <Link href={`/article/${categoryData.featuredArticle.slug}`}>
-                    <h2 className="font-gothic text-3xl md:text-4xl font-bold text-charcoal-darker mb-4 leading-tight uppercase tracking-tight">
-                      {categoryData.featuredArticle.title}
+          <div className="mb-12">
+            <h1 className="font-heading text-5xl md:text-6xl font-semibold text-charcoal-darker mb-4 tracking-tight">
+              {category.name.toUpperCase()}
+            </h1>
+            <p className="font-sans text-base text-charcoal/80 max-w-3xl">{category.description}</p>
+          </div>
+
+          {/* Filters */}
+          <div className="flex flex-wrap gap-2 mb-8 border-b border-charcoal/10 pb-4">
+            {filters.map((filter, index) => (
+              <button
+                key={index}
+                className={
+                  index === 0
+                    ? "topic-button"
+                    : "font-sans text-xs text-charcoal/60 hover:text-lime-500 transition-all duration-300 px-4 py-2 rounded-full"
+                }
+              >
+                {filter}
+              </button>
+            ))}
+          </div>
+
+          {/* Articles Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {category.articles.map((article, index) => (
+              <div
+                key={index}
+                className="border border-charcoal/10 group hover:border-lime-500/50 transition-all duration-300 shadow-lg rounded-xl overflow-hidden transform hover:translate-y-[-5px] hover:shadow-xl"
+              >
+                <div className="relative h-48">
+                  <Image
+                    src={article.image || "/placeholder.svg"}
+                    alt={article.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent to-charcoal-darker/20 mix-blend-overlay"></div>
+                  <div className="absolute top-0 left-0 bg-gradient-to-r from-lime-300 to-lime-500 px-3 py-1 rounded-br-lg">
+                    <span className="font-sans text-xs text-forest-dark font-medium">{article.category}</span>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                </div>
+                <div className="p-4">
+                  <Link href={`/article/${article.slug}`}>
+                    <h2 className="font-heading text-xl font-semibold text-charcoal-darker group-hover:text-lime-500 transition-colors mb-2">
+                      {article.title}
                     </h2>
                   </Link>
-                  <p className="font-mono text-sm text-charcoal/80 mb-6">{categoryData.featuredArticle.excerpt}</p>
-                  <div className="flex items-center">
-                    <Link href={`/article/${categoryData.featuredArticle.slug}`}>
-                      <Button className="bg-gradient-to-r from-lime-300 to-lime-500 hover:from-lime-400 hover:to-lime-600 text-forest-dark font-medium font-mono text-xs shadow-sm hover:shadow-md border border-lime-400/20">
-                        READ FEATURE <ChevronRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </Link>
-                    <span className="ml-4 font-mono text-xs text-charcoal/60">
-                      {categoryData.featuredArticle.readTime}
+                  <p className="font-sans text-sm text-charcoal/70 mb-4 line-clamp-2">{article.excerpt}</p>
+                  <div className="flex justify-between items-center">
+                    <span className="font-sans text-xs text-charcoal/60 bg-charcoal/5 px-2 py-1 rounded-full border-b border-charcoal-darker/10">
+                      {article.date}
+                    </span>
+                    <span className="font-sans text-xs text-charcoal/60 flex items-center">
+                      <Clock className="h-3 w-3 mr-1" /> {article.readTime}
                     </span>
                   </div>
-                </div>
-                <div className="lg:col-span-5 relative min-h-[300px] md:min-h-[400px]">
-                  <Image
-                    src={categoryData.featuredArticle.image || "/placeholder.svg"}
-                    alt={categoryData.featuredArticle.title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Category Controls */}
-        <section className="container mx-auto mt-8 px-4 md:px-6 lg:px-8">
-          <div className="max-w-[1200px] mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-              {/* Subcategory Tabs */}
-              <Tabs defaultValue="all" className="w-full md:w-auto">
-                <TabsList className="bg-offwhite border border-charcoal/20 p-1 h-auto flex flex-nowrap overflow-x-auto scrollbar-hide">
-                  <TabsTrigger
-                    value="all"
-                    className="font-mono text-xs data-[state=active]:bg-gradient-to-r data-[state=active]:from-lime-300 data-[state=active]:to-lime-500 data-[state=active]:text-forest-dark data-[state=active]:font-medium rounded-full"
-                    onClick={() => setActiveFilter("all")}
-                  >
-                    All
-                  </TabsTrigger>
-                  {categoryData.subcategories.map((subcategory) => (
-                    <TabsTrigger
-                      key={subcategory}
-                      value={subcategory}
-                      className="font-mono text-xs whitespace-nowrap data-[state=active]:bg-gradient-to-r data-[state=active]:from-lime-300 data-[state=active]:to-lime-500 data-[state=active]:text-forest-dark data-[state=active]:font-medium rounded-full"
-                      onClick={() => setActiveFilter(subcategory)}
-                    >
-                      {subcategory}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-              </Tabs>
-
-              {/* View Controls */}
-              <div className="flex items-center gap-2">
-                <div className="relative">
-                  <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-charcoal/50" />
-                  <input
-                    type="search"
-                    placeholder="Search articles..."
-                    className="pl-8 pr-4 py-2 w-full md:w-64 font-mono text-xs border border-charcoal/20 focus-visible:ring-lime-500 focus-visible:outline-none focus-visible:ring-1 rounded-full"
-                  />
-                </div>
-                <div className="flex border border-charcoal/20 rounded-full overflow-hidden">
-                  <button
-                    className={`p-2 ${viewMode === "grid" ? "bg-gradient-to-r from-lime-300 to-lime-500 text-forest-dark" : "bg-transparent"}`}
-                    onClick={() => setViewMode("grid")}
-                    aria-label="Grid view"
-                  >
-                    <Grid3X3 className={`h-4 w-4 ${viewMode === "grid" ? "text-forest-dark" : "text-charcoal/70"}`} />
-                  </button>
-                  <button
-                    className={`p-2 ${viewMode === "list" ? "bg-gradient-to-r from-lime-300 to-lime-500 text-forest-dark" : "bg-transparent"}`}
-                    onClick={() => setViewMode("list")}
-                    aria-label="List view"
-                  >
-                    <List className={`h-4 w-4 ${viewMode === "list" ? "text-forest-dark" : "text-charcoal/70"}`} />
-                  </button>
-                </div>
-                <Button variant="outline" size="sm" className="font-mono text-xs border-charcoal/20 rounded-full">
-                  <SlidersHorizontal className="h-3 w-3 mr-2" /> Sort
-                </Button>
-              </div>
-            </div>
-
-            {/* Articles Grid/List */}
-            {viewMode === "grid" ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredArticles.map((article) => (
-                  <div
-                    key={article.id}
-                    className="border border-charcoal/20 group hover:border-lime-500/30 transition-colors shadow-elegant-md"
-                  >
-                    <div className="relative h-48">
-                      <Image
-                        src={article.image || "/placeholder.svg"}
-                        alt={article.title}
-                        fill
-                        className="object-cover"
-                      />
-                      <div className="absolute top-0 left-0 bg-gradient-to-r from-lime-300 to-lime-500 px-3 py-1">
-                        <Link
-                          href={`/category/${article.category.toLowerCase()}?subcategory=${article.subcategory?.toLowerCase().replace(/\s+/g, "-")}`}
-                          className="text-forest-dark hover:text-forest-dark/90"
-                        >
-                          <span className="font-mono text-xs">{article.subcategory || article.category}</span>
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <Link href={`/article/${article.slug}`}>
-                        <h3 className="font-gothic text-xl font-bold text-charcoal-darker group-hover:text-lime-500 transition-colors">
-                          {article.title}
-                        </h3>
-                      </Link>
-                      <p className="font-mono text-xs text-charcoal/80 mt-2 line-clamp-2">{article.excerpt}</p>
-                      <div className="mt-4 flex justify-between items-center">
-                        <span className="font-mono text-xs text-charcoal/60">By {article.author}</span>
-                        <Link href={`/article/${article.slug}`}>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="font-mono text-xs text-lime-500 p-0 hover:bg-transparent hover:text-lime-600"
-                          >
-                            READ <ChevronRight className="ml-1 h-3 w-3" />
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
+                  <div className="mt-4 flex justify-end">
+                    <Link href={`/article/${article.slug}`}>
+                      <span className="font-sans text-xs text-lime-500 font-medium hover:text-forest transition-all duration-300 hover:translate-x-1 flex items-center">
+                        READ ARTICLE <ChevronRight className="ml-1 h-3 w-3" />
+                      </span>
+                    </Link>
                   </div>
-                ))}
+                </div>
               </div>
-            ) : (
-              <div className="space-y-6">
-                {filteredArticles.map((article) => (
-                  <div
-                    key={article.id}
-                    className="border border-charcoal/20 group hover:border-lime-500/30 transition-colors shadow-elegant-md p-4 md:p-6"
-                  >
-                    <div className="flex flex-col md:flex-row gap-6">
-                      <div className="relative h-48 md:h-auto md:w-1/4 shrink-0">
-                        <Image
-                          src={article.image || "/placeholder.svg"}
-                          alt={article.title}
-                          fill
-                          className="object-cover"
-                        />
-                        <div className="absolute top-0 left-0 bg-gradient-to-r from-lime-300 to-lime-500 px-3 py-1">
-                          <Link
-                            href={`/category/${article.category.toLowerCase()}?subcategory=${article.subcategory?.toLowerCase().replace(/\s+/g, "-")}`}
-                            className="text-forest-dark hover:text-forest-dark/90"
-                          >
-                            <span className="font-mono text-xs">{article.subcategory || article.category}</span>
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="flex-1">
-                        <Link href={`/article/${article.slug}`}>
-                          <h3 className="font-gothic text-2xl font-bold text-charcoal-darker group-hover:text-lime-500 transition-colors">
-                            {article.title}
-                          </h3>
-                        </Link>
-                        <p className="font-mono text-sm text-charcoal/80 mt-2">{article.excerpt}</p>
-                        <div className="mt-4 flex flex-wrap justify-between items-center gap-2">
-                          <div className="flex items-center gap-4">
-                            <span className="font-mono text-xs text-charcoal/60">By {article.author}</span>
-                            <span className="font-mono text-xs text-charcoal/60">{article.publishDate}</span>
-                            <span className="font-mono text-xs text-charcoal/60">{article.readTime}</span>
-                          </div>
-                          <Link href={`/article/${article.slug}`}>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="font-mono text-xs border-charcoal/20 text-forest hover:text-lime-500 hover:border-lime-500 rounded-full"
-                            >
-                              Read Article <ChevronRight className="ml-1 h-3 w-3" />
-                            </Button>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+            ))}
+          </div>
 
-            {/* Pagination */}
-            <div className="mt-12 flex justify-center">
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="font-mono text-xs border-charcoal/20 rounded-full"
-                  disabled
-                >
-                  Previous
-                </Button>
-                {[1, 2, 3, 4, 5].map((page) => (
-                  <Button
-                    key={page}
-                    variant={page === 1 ? "default" : "outline"}
-                    size="sm"
-                    className={`font-mono text-xs rounded-full ${
-                      page === 1
-                        ? "bg-gradient-to-r from-lime-300 to-lime-500 hover:from-lime-400 hover:to-lime-600 text-forest-dark font-medium shadow-sm border border-lime-400/20 hover:shadow-md"
-                        : "border-charcoal/20 hover:border-lime-500/30 hover:text-lime-500"
-                    }`}
-                  >
-                    {page}
-                  </Button>
-                ))}
-                <Button variant="outline" size="sm" className="font-mono text-xs border-charcoal/20 rounded-full">
-                  Next
-                </Button>
-              </div>
+          {/* Pagination */}
+          <div className="flex justify-center">
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-full font-sans text-xs text-charcoal/60 hover:text-lime-500"
+                disabled
+              >
+                Previous
+              </Button>
+              <Button
+                size="sm"
+                className="rounded-full font-sans text-xs bg-gradient-to-r from-lime-300 to-lime-500 hover:from-lime-400 hover:to-lime-600 text-forest-dark"
+              >
+                1
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-full font-sans text-xs text-charcoal/60 hover:text-lime-500"
+              >
+                2
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-full font-sans text-xs text-charcoal/60 hover:text-lime-500"
+              >
+                3
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-full font-sans text-xs text-charcoal/60 hover:text-lime-500"
+              >
+                Next
+              </Button>
             </div>
           </div>
-        </section>
-
-        {/* Newsletter Signup - Reused from homepage */}
-        <section className="container mx-auto mt-16 mb-16 px-4 md:px-6 lg:px-8">
-          <div className="max-w-[1200px] mx-auto">
-            <div className="border border-charcoal/20 p-8 bg-forest/5 shadow-elegant-md">
-              <div className="max-w-2xl mx-auto text-center">
-                <h3 className="font-gothic text-2xl font-bold text-charcoal-darker mb-2 uppercase tracking-tight">
-                  Stay Informed
-                </h3>
-                <p className="font-mono text-sm text-charcoal/80 mb-6">
-                  Subscribe to our weekly newsletter for in-depth analysis and exclusive content.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
-                  <input
-                    type="email"
-                    placeholder="Your email address"
-                    className="px-3 py-2 border border-charcoal/20 font-mono text-xs w-full focus:outline-none focus:ring-2 focus:ring-lime-500 rounded-full"
-                  />
-                  <Button className="bg-gradient-to-r from-lime-300 to-lime-500 hover:from-lime-400 hover:to-lime-600 text-forest-dark font-medium font-mono text-xs shadow-sm hover:shadow-md border border-lime-400/20">
-                    SUBSCRIBE
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        </div>
       </main>
     </div>
   )
@@ -403,7 +294,7 @@ function getCategoryData(slug: string): CategoryData {
           title: "Reserve Bank Signals Shift in Interest Rate Strategy",
           excerpt:
             "Economists predict a new approach to monetary policy as inflation concerns persist in the housing market.",
-          image: "/placeholder.svg?height=400&width=600&query=reserve bank australia",
+          image: "/reserve-bank-australia.png",
           category: "Australia",
           subcategory: "Economy",
           author: "David Thompson",
@@ -415,7 +306,7 @@ function getCategoryData(slug: string): CategoryData {
           id: "aus-5",
           title: "Renewable Energy Projects Accelerate in Rural Communities",
           excerpt: "Solar and wind initiatives are creating new economic opportunities in regional Australia.",
-          image: "/placeholder.svg?height=400&width=600&query=renewable energy rural australia",
+          image: "/renewable-energy-rural-australia.png",
           category: "Australia",
           subcategory: "Environment",
           author: "Jessica Lee",
@@ -427,7 +318,7 @@ function getCategoryData(slug: string): CategoryData {
           id: "aus-6",
           title: "State Governments Clash Over Water Management Plan",
           excerpt: "Drought concerns have reignited tensions over the allocation of Murray-Darling Basin resources.",
-          image: "/placeholder.svg?height=400&width=600&query=murray darling basin water",
+          image: "/murray-darling-basin.png",
           category: "Australia",
           subcategory: "State Politics",
           author: "Robert Wilson",
@@ -439,7 +330,7 @@ function getCategoryData(slug: string): CategoryData {
           id: "aus-7",
           title: "Housing Affordability Crisis Deepens in Major Cities",
           excerpt: "New data reveals the growing gap between income growth and property prices in metropolitan areas.",
-          image: "/placeholder.svg?height=400&width=600&query=housing affordability australia",
+          image: "/housing-affordability-australia.png",
           category: "Australia",
           subcategory: "Economy",
           author: "Sophia Martinez",
