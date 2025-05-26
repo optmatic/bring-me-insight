@@ -63,6 +63,14 @@ export default async function ArticlePage({
       );
     }
 
+    // Extract the first <p> from the HTML as subtitle if custom_excerpt/excerpt is not set
+    let subtitle = post.custom_excerpt || post.excerpt;
+    if (!subtitle && post.html) {
+      const root = parse(post.html);
+      const firstP = root.querySelector("p");
+      subtitle = firstP ? firstP.text.trim() : "";
+    }
+
     // Get related posts
     const relatedPosts = await getRelatedPosts(
       post.tags?.map((tag) => tag.slug) || [],
@@ -72,7 +80,7 @@ export default async function ArticlePage({
     // Transform Ghost post data to match our component structure
     const article = {
       title: post.title,
-      subtitle: post.custom_excerpt || post.excerpt,
+      subtitle,
       category: post.primary_tag?.name?.toUpperCase() || "UNCATEGORIZED",
       author: post.primary_author?.name || "Anonymous",
       authorTitle: post.primary_author?.bio || "Contributor",
