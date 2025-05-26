@@ -1,12 +1,8 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ChevronRight, Clock, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { getPosts } from "@/lib/ghost";
-import { use } from "react";
 import { Calendar } from "lucide-react";
 import type { PostOrPage, PostsOrPages } from "@tryghost/content-api";
 
@@ -35,12 +31,11 @@ type CategoryData = {
 };
 
 interface CategoryPageProps {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const resolvedParams = use(params);
-  const { slug } = resolvedParams;
+  const { slug } = params;
 
   let posts: PostsOrPages | null = null;
   let error: string | null = null;
@@ -199,9 +194,8 @@ function getCategoryData(slug: string): CategoryData {
       categoryData.subcategories = [
         "Federal Politics",
         "State Politics",
-        "Economy",
-        "Environment",
-        "Indigenous Affairs",
+        "Society",
+        "Culture",
       ];
       categoryData.featuredArticle = {
         id: "aus-1",
