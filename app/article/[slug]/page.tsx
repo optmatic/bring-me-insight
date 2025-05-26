@@ -127,39 +127,79 @@ function parseGhostContent(html: string): ContentBlock[] {
   const blocks: ContentBlock[] = [];
   const root = parse(html);
 
-  // Process headings
-  root.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach((heading) => {
-    blocks.push({
-      type: "heading",
-      content: heading.text,
-      id: heading.text.toLowerCase().replace(/\s+/g, "-"),
-    });
-  });
+  // Process all elements in order
+  root.childNodes.forEach((node) => {
+    if (node.nodeType === 1) {
+      // Element node
+      const element = node as unknown as HTMLElement;
 
-  // Process paragraphs
-  root.querySelectorAll("p").forEach((p) => {
-    blocks.push({
-      type: "paragraph",
-      content: p.text,
-    });
-  });
+      // Process headings
+      if (element.tagName?.match(/^H[1-6]$/i)) {
+        const text = element.textContent?.trim();
+        if (text) {
+          blocks.push({
+            type: "heading",
+            content: text,
+            id: text.toLowerCase().replace(/\s+/g, "-"),
+          });
+        }
+      }
+      // Process paragraphs
+      else if (element.tagName === "P") {
+        const text = element.textContent?.trim();
+        if (text) {
+          blocks.push({
+            type: "paragraph",
+            content: text,
+          });
+        }
+      }
+      // Process blockquotes
+      else if (element.tagName === "BLOCKQUOTE") {
+        const text = element.textContent?.trim();
+        if (text) {
+          blocks.push({
+            type: "quote",
+            content: text,
+            author: element.getAttribute("cite") || undefined,
+          });
+        }
+      }
+      // Process images
+      else if (element.tagName === "IMG") {
+        const src = element.getAttribute("src");
+        const alt = element.getAttribute("alt");
+        if (src) {
+          blocks.push({
+            type: "image",
+            url: src,
+            caption: alt || undefined,
+          });
+        }
+      }
+      // Process lists
+      else if (element.tagName === "UL" || element.tagName === "OL") {
+        const listItems = element.querySelectorAll("li");
+        const listContent = Array.from(listItems)
+          .map((li) => li.textContent?.trim() || "")
+          .filter(Boolean)
+          .join("\n");
 
-  // Process blockquotes
-  root.querySelectorAll("blockquote").forEach((quote) => {
-    blocks.push({
-      type: "quote",
-      content: quote.text,
-      author: quote.getAttribute("cite"),
-    });
-  });
-
-  // Process images
-  root.querySelectorAll("img").forEach((img) => {
-    blocks.push({
-      type: "image",
-      url: img.getAttribute("src"),
-      caption: img.getAttribute("alt"),
-    });
+        if (listContent) {
+          blocks.push({
+            type: "paragraph",
+            content: listContent,
+          });
+        }
+      }
+      // Process horizontal rules
+      else if (element.tagName === "HR") {
+        blocks.push({
+          type: "paragraph",
+          content: "---",
+        });
+      }
+    }
   });
 
   return blocks;

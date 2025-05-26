@@ -275,6 +275,31 @@ export function ArticleContent({ article }: ArticleContentProps) {
               {article.content.map((block, index) => {
                 switch (block.type) {
                   case "paragraph":
+                    // Check if the paragraph contains multiple lines (likely a list)
+                    if (block.content?.includes("\n")) {
+                      const items = block.content.split("\n");
+                      return (
+                        <ul
+                          key={index}
+                          className="list-disc pl-6 mb-6 space-y-2"
+                        >
+                          {items.map((item, i) => (
+                            <li key={i} className="text-base text-gray-800">
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      );
+                    }
+                    // Check if it's a separator
+                    if (block.content === "---") {
+                      return (
+                        <hr
+                          key={index}
+                          className="my-8 border-t-2 border-gray-200"
+                        />
+                      );
+                    }
                     return (
                       <p
                         key={index}
